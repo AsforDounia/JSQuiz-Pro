@@ -2,6 +2,7 @@ const Theme = require('../models/Theme');
 
 module.exports = {
 
+    // Get all themes
     async getAll(req, res){
         try {
             const themes = await Theme.findAll();
@@ -12,6 +13,27 @@ module.exports = {
         }
     },
 
+    // Get a single theme
+    async getThemeById(req, res) {
+        try {
+            const { id } = req.params;
+            const themeId = Number(id);
+            if (!Number.isInteger(themeId) || themeId <= 0) {
+                return res.status(400).json({ message: 'Invalid theme ID' });
+            }
+
+            const theme = await Theme.findByPk(themeId);
+            if (!theme) {
+                return res.status(404).json({ message: 'Theme not found' });
+            }
+            return res.json(theme);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Server error' });
+        }
+    },
+
+    // Create a new theme
     async createTheme(req, res) {
         try {
             const { name } = req.body;
@@ -33,8 +55,7 @@ module.exports = {
         }
     },
 
-
-
+    // Update a theme
     async updateTheme(req, res){
         try {
             const { id } = req.params;
@@ -65,7 +86,7 @@ module.exports = {
         }
     },
 
-
+    // Delete a theme
     async deleteTheme(req, res){
                 try {
             const { id } = req.params;
