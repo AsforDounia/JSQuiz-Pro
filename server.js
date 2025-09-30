@@ -2,6 +2,8 @@ const express = require("express");
 const sequelize = require("./config/database"); // path to sequelize file
 const userRoutes = require("./routes/users"); // path to users route
 const authRoutes = require("./routes/auth");
+const themesRoutes = require("./routes/themes");
+const questionsRoutes = require("./routes/questions");
 require("dotenv").config();
 
 const app = express();
@@ -13,6 +15,9 @@ app.use(express.json());
 // Routes
 app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
+app.use("/themes", themesRoutes);
+app.use("/questions", questionsRoutes);
+
 
 // Test root
 app.get("/", (req, res) => {
