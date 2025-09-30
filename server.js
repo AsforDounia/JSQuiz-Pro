@@ -2,6 +2,7 @@ const express = require("express");
 const sequelize = require("./config/database"); // path to sequelize file
 const userRoutes = require("./routes/users"); // path to users route
 const authRoutes = require("./routes/auth");
+const authenticateToken = require('./middlewares/auth');
 require("dotenv").config();
 
 const app = express();
@@ -17,6 +18,11 @@ app.use("/auth", authRoutes);
 // Test root
 app.get("/", (req, res) => {
     res.send("Server is running");
+});
+
+
+app.get('/users/protected', authenticateToken, async (req, res) => {
+    res.json({ message: `Hello user ${req.user.id}, your role is ${req.user.role}` });
 });
 
 // Connect to DB and start server
