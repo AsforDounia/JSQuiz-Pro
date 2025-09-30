@@ -19,4 +19,6 @@ router.put('/:id', authenticateToken, authorizeRoles('admin'), QuestionsControll
 // Delete a question
 router.delete('/:id', authenticateToken, authorizeRoles('admin'), QuestionsController.delete);
 
+// Delete all questions by theme
+router.delete('/theme/:themeId', authenticateToken, authorizeRoles('admin'), QuestionsController.deleteByTheme);
 module.exports = router;
