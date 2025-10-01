@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { blacklistToken } = require('../services/auth');
 
 module.exports = {
     // Register a new user
@@ -8,7 +9,8 @@ module.exports = {
         const { username, email, password } = req.body;
         try {
             const existingUser = await User.findOne({ where: { email } });
-            if (existingUser) return res.status(400).json({ message: 'Email already registered' });
+            if (existingUser) 
+                return res.status(400).json({ message: 'Email already registered' });
 
             const salt = await bcrypt.genSalt(10);
             const password_hash = await bcrypt.hash(password, salt);
@@ -21,7 +23,17 @@ module.exports = {
                 { expiresIn: '1h' }
             );
 
-            return res.status(201).json({ token, message: 'User created successfully' });
+            // Set token in HTTP-only cookie
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                maxAge: 3600000 // 1 hour
+            });
+
+            return res.status(201).json({ 
+                token, 
+                message: 'User created successfully' 
+            });
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: 'Server error' });
@@ -33,10 +45,12 @@ module.exports = {
         const { email, password } = req.body;
         try {
             const user = await User.findOne({ where: { email } });
-            if (!user) return res.status(400).json({ message: 'Invalid credentials' });
+            if (!user) 
+                return res.status(400).json({ message: 'Invalid credentials' });
 
             const isMatch = await bcrypt.compare(password, user.password_hash);
-            if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+            if (!isMatch) 
+                return res.status(400).json({ message: 'Invalid credentials' });
 
             const token = jwt.sign(
                 { id: user.id, role: user.role, name: user.username },
@@ -44,12 +58,45 @@ module.exports = {
                 { expiresIn: '1h' }
             );
 
-            return res.json({ message: "User login successfully ", token, user: { id: user.id, username: user.username, email: user.email, role: user.role } });
+            // Set token in HTTP-only cookie
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                maxAge: 3600000
+            });
+
+            return res.json({ 
+                message: "User logged in successfully",
+                token,
+                user: { id: user.id, username: user.username, email: user.email, role: user.role } 
+            });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Server error' });
+        }
+    },
+
+    // Logout user
+    async logout(req, res) {
+        try {
+            const authHeader = req.headers['authorization'];
+            const headerToken = authHeader && authHeader.split(' ')[1];
+            const cookieToken = req.cookies && req.cookies.token;
+            const token = headerToken || cookieToken;
+
+            if (token) {
+                blacklistToken(token);
+            }
+
+            res.clearCookie('token', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                expires: new Date(0)
+            });
+            return res.json({ message: 'User logged out successfully' });
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: 'Server error' });
         }
     }
-
 }
-

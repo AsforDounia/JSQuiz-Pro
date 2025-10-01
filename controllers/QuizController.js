@@ -1,6 +1,8 @@
 const Question = require('../models/Question');
 const Theme = require('../models/Theme');
 
+
+
 module.exports = {
     // Get a quiz by theme
     async getQuizByTheme(req, res) {
@@ -36,6 +38,6 @@ module.exports = {
             console.error('Failed to delete questions:', error);
             res.status(500).json({ message: 'Internal server error' });
         }
-    },
+    }
 
 };

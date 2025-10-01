@@ -88,7 +88,7 @@ module.exports = {
 
     // Delete a theme
     async deleteTheme(req, res){
-                try {
+            try {
             const { id } = req.params;
 
             const theme = await Theme.findByPk(id);
