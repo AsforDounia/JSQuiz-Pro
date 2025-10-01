@@ -134,17 +134,7 @@ module.exports = {
         }
     },
 
-    // Delete all questions by theme
-    async deleteByTheme(req, res) {
-        try {
-            const { themeId } = req.params;
-            await Question.destroy({ where: { thematique_id: themeId } });
-            res.json({ message: 'Questions deleted successfully' });
-        } catch (error) {
-            console.error('Failed to delete questions:', error);
-            res.status(500).json({ message: 'Internal server error' });
-        }
-    },
+
 
     
 };
