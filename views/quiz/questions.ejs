@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz - DevQuiz Pro</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Quiz Header -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-content">
+          <div class="quiz-global-timer-section">
+            <svg
+              class="quiz-timer-icon"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+              />
+            </svg>
+            <span id="globalTimer" class="quiz-global-timer">00:00</span>
+          </div>
+          <div class="quiz-info-section">
+            <div class="quiz-progress-text">
+              Question <span id="currentQuestionNum">1</span> of
+              <span id="totalQuestions">3</span>
+            </div>
+            <div id="quizTitle" class="quiz-title">HTML Fundamentals</div>
+          </div>
+          <div class="quiz-score-section">
+            <svg
+              class="quiz-score-icon"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+              />
+            </svg>
+            <span id="score" class="quiz-score">0 points</span>
+          </div>
+        </div>
+        <div class="quiz-progress-container">
+          <div class="quiz-progress-bar">
+            <div
+              id="progressBar"
+              class="quiz-progress-fill"
+              style="width: 33%"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Quiz Content -->
+    <main class="quiz-main-content">
+      <div class="container">
+        <div class="quiz-content-wrapper">
+          <!-- Question Card -->
+          <div class="quiz-question-card">
+            <div class="quiz-question-layout">
+              <div class="quiz-question-content">
+                <span class="quiz-badge"
+                  >Question <span id="questionNumber">1</span></span
+                >
+                <h2 id="questionText" class="quiz-question-title">
+                  What does HTML stand for?
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <!-- Answer Options -->
+          <div id="answerOptions" class="quiz-options-grid">
+            <!-- Options will be dynamically generated -->
+          </div>
+
+          <!-- Next Button -->
+          <div class="quiz-button-container">
+            <button
+              id="nextBtn"
+              class="btn btn-primary btn-large"
+              onclick="handleNext()"
+            >
+              Next Question
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Report Modal -->
+    <div id="reportModal" class="quiz-modal hidden">
+      <div class="report-modal">
+        <div class="report-header">
+          <h3 class="report-title">
+            <span id="reportTitle">HTML Fundamentals</span>
+          </h3>
+          <p class="report-description">
+            Detailed breakdown of your performance
+          </p>
+        </div>
+
+        <div class="report-content">
+          <div class="report-stats">
+            <div class="report-stat">
+              <div id="reportPercentage" class="report-percentage">67%</div>
+              <div class="report-stat-label">Final Score</div>
+            </div>
+            <div class="report-stat">
+              <div id="reportCorrect" class="report-stat-number correct">2</div>
+              <div class="report-stat-label">Correct</div>
+            </div>
+            <div class="report-stat">
+              <div id="reportIncorrect" class="report-stat-number incorrect">
+                1
+              </div>
+              <div class="report-stat-label">Incorrect</div>
+            </div>
+          </div>
+
+          <div class="report-questions">
+            <h4 class="report-section-title">Question Review</h4>
+            <div id="questionReview">
+              <!-- Questions will be dynamically generated -->
+            </div>
+          </div>
+        </div>
+
+        <div class="report-close-button">
+          <button class="button" onclick="closeReport()">Close Report</button>
+        </div>
+      </div>
+    </div>
+    
+  </body>
+</html>

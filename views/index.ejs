@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DevQuiz Pro - Master Web Development</title>
+    <meta
+      name="description"
+      content="Professional quiz platform for HTML, CSS, and JavaScript mastery"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo-section">
+            <span class="logo-text">DevQuiz Pro</span>
+          </div>
+          <div class="header-actions">
+            <div id="userSection" class="user-section hidden">
+              <span id="userName" class="user-name">Welcome, User!</span>
+              <button id="logoutBtn" class="btn btn-outline">Logout</button>
+            </div>
+            <div id="authSection" class="auth-section">
+              <a href="login.html" class="btn">Login</a>
+              <a href="register.html" class="btn btn-primary"
+                >Register</a
+              >
+            </div>
+            <a href="dashboard.html" class="btn">
+              <svg fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"
+                />
+              </svg>
+              Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-background"></div>
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Master Web Development
+            <span class="hero-title-gradient">One Quiz at a Time</span>
+          </h1>
+          <p class="hero-description">
+            Test your knowledge, track your progress, and become a better
+            developer with our comprehensive quiz platform designed for modern
+            web technologies.
+          </p>
+
+          <!-- Stats -->
+          <div class="stats-container">
+            <div class="stat-card">
+              <svg fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+              <div>
+                <div class="stat-value">12,000+</div>
+                <div class="stat-label">Active Learners</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <div class="stat-value">45,000+</div>
+                <div class="stat-label">Quizzes Completed</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <svg fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                />
+              </svg>
+              <div>
+                <div class="stat-value">87%</div>
+                <div class="stat-label">Success Rate</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-large" onclick="scrollToQuizzes()">
+            Start Learning
+            <svg fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz Selection -->
+    <section class="quiz-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Choose Your Challenge</h2>
+          <p class="section-description">
+            Select a quiz that matches your skill level and start improving your
+            web development expertise today.
+          </p>
+        </div>
+
+        <div class="quiz-grid">
+          <!-- HTML Quiz Card -->
+          <div class="quiz-card" onclick="startQuiz('html')">
+            <div class="quiz-card-top-bar html"></div>
+            <div class="quiz-card-header">
+              <div class="quiz-card-header-top">
+                <span class="quiz-badge">Beginner</span>
+              </div>
+              <h3 class="quiz-card-title">HTML Fundamentals</h3>
+              <p class="quiz-card-description">
+                Master the building blocks of the web
+              </p>
+            </div>
+            <div class="quiz-card-content">
+              <div class="quiz-card-info">
+                <span>15 questions</span>
+                <span>10 min</span>
+              </div>
+              <button class="quiz-card-button">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                Start Quiz
+              </button>
+            </div>
+          </div>
+
+          <!-- CSS Quiz Card -->
+          <div class="quiz-card" onclick="startQuiz('css')">
+            <div class="quiz-card-top-bar css"></div>
+            <div class="quiz-card-header">
+              <div class="quiz-card-header-top">
+                <span class="quiz-badge">Intermediate</span>
+              </div>
+              <h3 class="quiz-card-title">CSS Styling</h3>
+              <p class="quiz-card-description">
+                Design beautiful and responsive layouts
+              </p>
+            </div>
+            <div class="quiz-card-content">
+              <div class="quiz-card-info">
+                <span>20 questions</span>
+                <span>15 min</span>
+              </div>
+              <button class="quiz-card-button">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                Start Quiz
+              </button>
+            </div>
+          </div>
+
+          <!-- JavaScript Quiz Card -->
+          <div class="quiz-card" onclick="startQuiz('javascript')">
+            <div class="quiz-card-top-bar javascript"></div>
+            <div class="quiz-card-header">
+              <div class="quiz-card-header-top">
+                <span class="quiz-badge advanced">Advanced</span>
+              </div>
+              <h3 class="quiz-card-title">JavaScript Logic</h3>
+              <p class="quiz-card-description">
+                Build interactive web applications
+              </p>
+            </div>
+            <div class="quiz-card-content">
+              <div class="quiz-card-info">
+                <span>25 questions</span>
+                <span>20 min</span>
+              </div>
+              <button class="quiz-card-button">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                Start Quiz
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+   </body>
+</html>
