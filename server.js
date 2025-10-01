@@ -4,6 +4,7 @@ const userRoutes = require("./routes/users"); // path to users route
 const authRoutes = require("./routes/auth");
 const themesRoutes = require("./routes/themes");
 const questionsRoutes = require("./routes/questions");
+const quizRoutes = require("./routes/quiz");
 require("dotenv").config();
 
 const app = express();
@@ -17,6 +18,8 @@ app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/themes", themesRoutes);
 app.use("/questions", questionsRoutes);
+app.use("/quiz", quizRoutes);
+
 
 
 // Test root
