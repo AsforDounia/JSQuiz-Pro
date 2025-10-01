@@ -50,4 +50,10 @@ exports.login = async (req, res) => {
     }
 };
 
+exports.RegisterForm = (req, res) => {
+    res.render("auth/register")
+}
 
+exports.LoginForm = (req, res) => {
+    res.render("auth/login")
+}
