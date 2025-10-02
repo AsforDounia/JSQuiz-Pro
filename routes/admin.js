@@ -4,8 +4,10 @@ const UsersController = require('../controllers/UsersController');
 const authenticateToken = require('../middlewares/auth');
 const authorizeRoles = require('../middlewares/authorize');
 
-router.get('/dashboard', authenticateToken, authorizeRoles('user') , (req, res) =>{
-    res.render('user/dashboard');
+router.get('/', authenticateToken, authorizeRoles('admin'), UsersController.getAll);
+
+router.get('/dashboard', authenticateToken, authorizeRoles('admin') , (req, res) =>{
+    res.render('admin/dashboard');
 });
 
 
