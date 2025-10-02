@@ -4,6 +4,9 @@ const userRoutes = require("./routes/users"); // path to users route
 const authRoutes = require("./routes/auth");
 const themesRoutes = require("./routes/themes");
 const questionsRoutes = require("./routes/questions");
+const quizRoutes = require("./routes/quiz");
+const cookieParser = require('cookie-parser'); // Parse cookies for reading JWT from cookie
+
 require("dotenv").config();
 const path = require('path'); 
 
@@ -23,11 +26,16 @@ app.use(express.urlencoded({ extended: true }));
 // fichiers statiques (css, js, images)
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Parse cookies for reading JWT from cookie
+app.use(cookieParser());
+
 // Routes
 app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/themes", themesRoutes);
 app.use("/questions", questionsRoutes);
+app.use("/quiz", quizRoutes);
+
 
 app.get('/index', (req, res) => {
     res.render('index'); 
