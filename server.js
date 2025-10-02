@@ -8,12 +8,23 @@ const quizRoutes = require("./routes/quiz");
 const cookieParser = require('cookie-parser'); // Parse cookies for reading JWT from cookie
 
 require("dotenv").config();
+const path = require('path'); 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
+
+// config pour EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// pour lire formulaires
+app.use(express.urlencoded({ extended: true }));
+
+// fichiers statiques (css, js, images)
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Parse cookies for reading JWT from cookie
 app.use(cookieParser());
@@ -26,10 +37,13 @@ app.use("/questions", questionsRoutes);
 app.use("/quiz", quizRoutes);
 
 
+app.get('/index', (req, res) => {
+    res.render('index'); 
+});
 
 // Test root
 app.get("/", (req, res) => {
-    res.send("Server is running");
+    res.render("index");
 });
 
 
