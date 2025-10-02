@@ -8,7 +8,9 @@
       name="description"
       content="Personal dashboard for tracking your quiz progress and achievements"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+    <link rel="stylesheet" href="/css/style.css" />
+
   </head>
   <body>
     <!-- Header -->
@@ -35,8 +37,11 @@
             <span class="logo-text">DevQuiz Pro</span>
           </div>
           <div class="header-actions">
-            <a href="index.html" class="btn">Accueil</a>
-            <button id="logoutBtn" class="btn">Déconnexion</button>
+            <a href="/" class="btn">Accueil</a>
+            <form action="/auth/logout" method="POST">
+                <button type="submit" class="btn">Déconnexion</button>
+            </form>
+            <!-- <button id="logoutBtn" class="btn">Déconnexion</button> -->
           </div>
         </div>
       </div>
