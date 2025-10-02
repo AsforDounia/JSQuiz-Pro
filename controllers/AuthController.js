@@ -20,6 +20,10 @@ module.exports = {
             const salt = await bcrypt.genSalt(10);
             const password_hash = await bcrypt.hash(password, salt);
 
+            // Determine role: first user is admin
+            const userCount = await User.count();
+            const role = userCount === 0 ? 'admin' : 'user';
+
             const user = await User.create({ username, email, password_hash });
 
             const token = jwt.sign(
@@ -71,7 +75,14 @@ module.exports = {
                 maxAge: 3600000
             });
 
-            return res.redirect('/users/dashboard');
+
+            if (user.role === 'admin') {
+                return res.redirect('/admin/dashboard'); // Admin dashboard
+            } else if (user.role === 'user') {
+                return res.redirect('/users/dashboard'); // Regular user dashboard
+            } else {
+                return res.redirect('/'); // Fallback
+            }
             // return res.json({ 
             //     message: "User logged in successfully",
             //     token,
