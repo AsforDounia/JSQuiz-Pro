@@ -6,8 +6,13 @@ const { blacklistToken } = require('../services/auth');
 module.exports = {
     // Register a new user
     async register(req, res) {
-        const { username, email, password } = req.body;
+        const { username, email, password, confirmPassword } = req.body;
         try {
+            // Validate password confirmation
+            if (password !== confirmPassword) {
+                return res.status(400).json({ message: 'Passwords do not match' });
+            }
+
             const existingUser = await User.findOne({ where: { email } });
             if (existingUser) 
                 return res.status(400).json({ message: 'Email already registered' });
@@ -86,7 +91,7 @@ module.exports = {
 
             if (token) {
                 blacklistToken(token);
-            }
+            }   
 
             res.clearCookie('token', {
                 httpOnly: true,
