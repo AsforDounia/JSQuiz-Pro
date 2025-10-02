@@ -1,5 +1,4 @@
-const Question = require('../models/Question');
-const Theme = require('../models/Theme');
+const { Question, Theme } = require('../models');
 
 module.exports = {
     // Get all questions, optionally filtered by theme

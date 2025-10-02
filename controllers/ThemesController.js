@@ -1,4 +1,4 @@
-const Theme = require('../models/Theme');
+const { Theme } = require('../models');
 
 module.exports = {
 

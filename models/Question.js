@@ -43,6 +43,5 @@ const Question = sequelize.define('Question', {
   underscored: true,
 });
 
-Question.belongsTo(Theme, { foreignKey: 'thematique_id', as: 'theme' });
 
 module.exports = Question;

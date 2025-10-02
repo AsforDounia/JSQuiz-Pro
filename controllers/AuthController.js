@@ -39,7 +39,11 @@ module.exports = {
                 maxAge: 3600000 // 1 hour
             });
 
-            return res.redirect('/users/dashboard');
+            if (role === 'admin') {
+                return res.redirect('/admin/dashboard');
+            } else {
+                return res.redirect('/users/dashboard');
+            }
             // return res.status(201).json({ 
             //     token, 
             //     message: 'User created successfully' 
