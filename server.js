@@ -1,6 +1,7 @@
 const express = require("express");
 const sequelize = require("./config/database"); // path to sequelize file
 const userRoutes = require("./routes/users"); // path to users route
+const adminRoutes = require("./routes/admin");
 const authRoutes = require("./routes/auth");
 const themesRoutes = require("./routes/themes");
 const questionsRoutes = require("./routes/questions");
@@ -31,6 +32,7 @@ app.use(cookieParser());
 
 // Routes
 app.use("/users", userRoutes);
+app.use("/admin", adminRoutes);
 app.use("/auth", authRoutes);
 app.use("/themes", themesRoutes);
 app.use("/questions", questionsRoutes);
