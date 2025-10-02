@@ -37,17 +37,17 @@
               </p>
             </div>
 
-            <form id="loginForm" class="auth-form">
+            <form id="loginForm" action="/auth/login" class="auth-form" method="post" >
               <div class="form-group">
                 <label for="loginIdentifier" class="form-label"
-                  >Email ou nom d'utilisateur</label
+                  >Email</label
                 >
                 <input
-                  type="text"
+                  type="email"
                   id="loginIdentifier"
-                  name="loginIdentifier"
+                  name="email"
                   class="form-input"
-                  placeholder="Entrez votre email ou nom d'utilisateur"
+                  placeholder="Entrez votre email"
                   required
                 />
               </div>

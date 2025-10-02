@@ -37,13 +37,13 @@
               </p>
             </div>
 
-            <form id="registerForm" class="auth-form">
+            <form action="/auth/register" id="registerForm" class="auth-form" method="post">
               <div class="form-group">
-                <label for="fullName" class="form-label">Nom complet</label>
+                <label for="username" class="form-label">Nom complet</label>
                 <input
                   type="text"
-                  id="fullName"
-                  name="fullName"
+                  id="username"
+                  name="username"
                   class="form-input"
                   placeholder="Entrez votre nom complet"
                   required

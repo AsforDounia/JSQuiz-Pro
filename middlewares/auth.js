@@ -7,7 +7,11 @@ function authenticateToken(req, res, next) {
     const headerToken = authHeader && authHeader.split(' ')[1];
     const cookieToken = req.cookies && req.cookies.token;
     const token = headerToken || cookieToken;
-    if (!token) return res.status(401).json({ message: 'Access denied' });
+    // if (!token) return res.status(401).json({ message: 'Access denied' });
+    if (!token) {
+        // No token → redirect to login
+        return res.redirect('/auth/login');
+    }
 
     try {
         if (isTokenBlacklisted(token)) {

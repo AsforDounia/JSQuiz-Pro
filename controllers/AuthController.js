@@ -35,10 +35,11 @@ module.exports = {
                 maxAge: 3600000 // 1 hour
             });
 
-            return res.status(201).json({ 
-                token, 
-                message: 'User created successfully' 
-            });
+            return res.redirect('/users/dashboard');
+            // return res.status(201).json({ 
+            //     token, 
+            //     message: 'User created successfully' 
+            // });
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: 'Server error' });
@@ -70,11 +71,12 @@ module.exports = {
                 maxAge: 3600000
             });
 
-            return res.json({ 
-                message: "User logged in successfully",
-                token,
-                user: { id: user.id, username: user.username, email: user.email, role: user.role } 
-            });
+            return res.redirect('/users/dashboard');
+            // return res.json({ 
+            //     message: "User logged in successfully",
+            //     token,
+            //     user: { id: user.id, username: user.username, email: user.email, role: user.role } 
+            // });
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: 'Server error' });
@@ -98,7 +100,8 @@ module.exports = {
                 secure: process.env.NODE_ENV === 'production',
                 expires: new Date(0)
             });
-            return res.json({ message: 'User logged out successfully' });
+            return res.redirect('/'); 
+            // return res.json({ message: 'User logged out successfully' });
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: 'Server error' });
