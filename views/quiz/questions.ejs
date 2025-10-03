@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz - DevQuiz Pro</title>
-    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
     <!-- Quiz Header -->
@@ -25,10 +25,10 @@
           </div>
           <div class="quiz-info-section">
             <div class="quiz-progress-text">
-              Question <span id="currentQuestionNum">1</span> of
-              <span id="totalQuestions">3</span>
+              Question <span id="currentQuestionNum"><%= currentQuestion + 1 %></span> of
+              <span id="totalQuestions"><%= totalQuestions %></span>
             </div>
-            <div id="quizTitle" class="quiz-title">HTML Fundamentals</div>
+            <div id="quizTitle" class="quiz-title"><%= theme.name %> Quiz</div>
           </div>
           <div class="quiz-score-section">
             <svg
@@ -48,7 +48,7 @@
             <div
               id="progressBar"
               class="quiz-progress-fill"
-              style="width: 33%"
+              style="width: <%= Math.round(((currentQuestion + 1) / totalQuestions) * 100) %>%"
             ></div>
           </div>
         </div>
@@ -58,16 +58,17 @@
     <!-- Quiz Content -->
     <main class="quiz-main-content">
       <div class="container">
+        <% if (hasData && questions && questions.length > 0) { %>
         <div class="quiz-content-wrapper">
           <!-- Question Card -->
           <div class="quiz-question-card">
             <div class="quiz-question-layout">
               <div class="quiz-question-content">
                 <span class="quiz-badge"
-                  >Question <span id="questionNumber">1</span></span
+                  >Question <span id="questionNumber"><%= currentQuestion + 1 %></span></span
                 >
                 <h2 id="questionText" class="quiz-question-title">
-                  What does HTML stand for?
+                  <%= questions[currentQuestion].question %>
                 </h2>
               </div>
             </div>
@@ -75,7 +76,28 @@
 
           <!-- Answer Options -->
           <div id="answerOptions" class="quiz-options-grid">
-            <!-- Options will be dynamically generated -->
+            <% 
+            let options = questions[currentQuestion].options;
+            if (typeof options === 'string') {
+              try {
+                options = JSON.parse(options);
+              } catch (e) {
+                options = [];
+              }
+            }
+            %>
+            <% if (Array.isArray(options) && options.length > 0) { %>
+              <% options.forEach((option, index) => { %>
+                <div class="quiz-option-card" onclick="selectAnswer('<%= index %>')">
+                  <div class="quiz-option-content">
+                    <div class="quiz-option-indicator" data-index="<%= index %>">
+                      <%= String.fromCharCode(65 + index) %>
+                    </div>
+                    <span class="quiz-option-text"><%= option %></span>
+                  </div>
+                </div>
+              <% }); %>
+            <% } %>
           </div>
 
           <!-- Next Button -->
@@ -89,6 +111,69 @@
             </button>
           </div>
         </div>
+        <% } else { %>
+        <!-- No Data Section -->
+        <div class="no-quiz-container">
+          <div class="no-quiz-content">
+            <div class="no-quiz-icon">
+              <svg
+                width="80"
+                height="80"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v4" />
+                <path d="M12 16h.01" />
+              </svg>
+            </div>
+            <h3 class="no-quiz-title">Quiz Non Disponible</h3>
+            <p class="no-quiz-description">
+              Désolé, le quiz "<%= quizType %>" n'a pas encore de questions disponibles.
+              <br />
+              Veuillez réessayer plus tard ou choisir un autre quiz.
+            </p>
+            <div class="no-quiz-actions">
+              <a href="/quiz/list" class="btn btn-primary">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M19 12H5" />
+                  <polyline points="12,19 5,12 12,5" />
+                </svg>
+                Retour aux Quiz
+              </a>
+              <a href="/users/dashboard" class="btn btn-secondary">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                  <polyline points="9,22 9,12 15,12 15,22" />
+                </svg>
+                Tableau de Bord
+              </a>
+            </div>
+          </div>
+        </div>
+        <% } %>
       </div>
     </main>
 
