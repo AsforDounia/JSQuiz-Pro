@@ -29,7 +29,7 @@ module.exports = {
             const token = jwt.sign(
                 { id: user.id, role: user.role, name: user.username },
                 process.env.JWT_SECRET,
-                { expiresIn: '1h' }
+                { expiresIn: '24h' }
             );
 
             // Set token in HTTP-only cookie
@@ -69,7 +69,7 @@ module.exports = {
             const token = jwt.sign(
                 { id: user.id, role: user.role, name: user.username },
                 process.env.JWT_SECRET,
-                { expiresIn: '1h' }
+                { expiresIn: '24h' }
             );
 
             // Set token in HTTP-only cookie

@@ -29,7 +29,7 @@
                 >Register</a
               >
             </div>
-            <a href="users/dashboard" class="btn">
+            <a href="" id="dashboard-link" class="btn">
               <svg fill="currentColor" viewBox="0 0 24 24">
                 <path
                   d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"
@@ -196,6 +196,30 @@
         </div>
       </div>
     </section>
+
+
+
+
+    <script>
+      // Get the JWT cookie
+      document.addEventListener("DOMContentLoaded", () => {
+      const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+      const userDashboardLink = document.getElementById("dashboard-link");
+
+      if (token) {
+        // Decode token (if you store role inside JWT) using atob or a library like jwt-decode
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        alert(payload);
+        if (payload.role === 'admin') {
+          userDashboardLink.href = '/admin/dashboard';
+        } else {
+          userDashboardLink.href = '/users/dashboard';
+        }
+        userDashboardLink.textContent = 'Dashboard';
+        document.querySelector('.header-actions').appendChild(userDashboardLink);
+      }
+      })
+    </script>
 
    </body>
 </html>

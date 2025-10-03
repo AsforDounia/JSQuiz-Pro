@@ -489,6 +489,9 @@
 </head>
 <body>
   <!-- Header -->
+   <pre>
+  <!-- <%= JSON.stringify(users, null, 2) %> -->
+</pre>
   <header class="site-header">
     <div class="container">
       <div class="header-content">
@@ -590,16 +593,6 @@
       <!-- Quizzes Tab -->
       <div class="tab-content active" id="quizzes-tab">
         <div class="section">
-          <div class="section-header">
-            <h2 class="section-title">Gestion des Quiz</h2>
-            <button class="btn btn-primary" onclick="openQuizModal()">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="5" x2="12" y2="19"/>
-                <line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-              Nouveau Quiz
-            </button>
-          </div>
 
           <div class="toolbar">
             <div class="search-box">
@@ -607,9 +600,9 @@
             </div>
             <select class="form-select" id="quizFilter">
               <option value="all">Tous les thèmes</option>
-              <option value="html">HTML</option>
-              <option value="css">CSS</option>
-              <option value="javascript">JavaScript</option>
+              <% quizzes.forEach(theme => { %>
+                <option value="<%= theme.id %>"><%= theme.name %></option>
+              <% }) %>
             </select>
           </div>
 
@@ -618,49 +611,25 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Titre</th>
-                  <th>Thème</th>
+                  <th>Thème Name</th>
                   <th>Questions</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>#001</td>
-                  <td>Les Bases HTML</td>
-                  <td><span class="badge badge-warning">HTML</span></td>
-                  <td>15</td>
-                  <td>
-                    <div class="actions">
-                      <button class="btn btn-sm" onclick="editQuiz(1)">Modifier</button>
-                      <button class="btn btn-sm btn-destructive" onclick="deleteQuiz(1)">Supprimer</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#002</td>
-                  <td>CSS Avancé</td>
-                  <td><span class="badge badge-info">CSS</span></td>
-                  <td>15</td>
-                  <td>
-                    <div class="actions">
-                      <button class="btn btn-sm" onclick="editQuiz(2)">Modifier</button>
-                      <button class="btn btn-sm btn-destructive" onclick="deleteQuiz(2)">Supprimer</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#003</td>
-                  <td>JavaScript ES6+</td>
-                  <td><span class="badge badge-success">JavaScript</span></td>
-                  <td>15</td>
-                  <td>
-                    <div class="actions">
-                      <button class="btn btn-sm" onclick="editQuiz(3)">Modifier</button>
-                      <button class="btn btn-sm btn-destructive" onclick="deleteQuiz(3)">Supprimer</button>
-                    </div>
-                  </td>
-                </tr>
+                <% quizzes.forEach(theme => { %>
+                  <tr>
+                      <td><%= theme.id %></td>
+                      <td><%= theme.name %></td>
+                      <td><%= theme.questions.length %></td>
+                      <td>
+                        <div class="actions">
+                          <!-- <button class="btn btn-sm" onclick="editQuiz(<%= theme.id %>)">Modifier</button> -->
+                          <button class="btn btn-sm btn-destructive" onclick="deleteQuiz(<%= theme.id %>)">Supprimer</button>
+                        </div>
+                    </td>
+                  </tr>
+                <% }) %>
               </tbody>
             </table>
           </div>
@@ -687,9 +656,9 @@
             </div>
             <select class="form-select">
               <option value="all">Tous les quiz</option>
-              <option value="1">Les Bases HTML</option>
-              <option value="2">CSS Avancé</option>
-              <option value="3">JavaScript ES6+</option>
+              <% quizzes.forEach(theme => { %>
+                <option value="<%= theme.id %>"><%= theme.name %></option>
+              <% }) %>
             </select>
           </div>
 
@@ -704,17 +673,22 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>#001</td>
-                  <td>Qu'est-ce que HTML ?</td>
-                  <td>Les Bases HTML</td>
-                  <td>
-                    <div class="actions">
-                      <button class="btn btn-sm" onclick="editQuestion(1)">Modifier</button>
-                      <button class="btn btn-sm btn-destructive" onclick="deleteQuestion(1)">Supprimer</button>
-                    </div>
-                  </td>
-                </tr>
+                <% quizzes.forEach(theme => { %>
+                  <% theme.questions.forEach(q => { %>
+                    <tr>
+                      <td><%= q.id %></td>
+                      <td><%= q.question %></td>
+                      <td><%= theme.name %></td>
+                      <td>
+                        <div class="actions">
+                          <button class="btn btn-sm" onclick="editQuestion(<%= q.id %>)">Modifier</button>
+                          <button class="btn btn-sm btn-destructive" onclick="deleteQuestion(<%= q.id %>)">Supprimer</button>
+                        </div>
+                      </td>
+
+                    </tr>
+                    <% }) %>
+                  <% }) %>
               </tbody>
             </table>
           </div>
@@ -747,22 +721,25 @@
                 <tr>
                   <th>ID</th>
                   <th>Nom</th>
-                  <th>Quiz Associés</th>
+                  <th>Number of Questions</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>#001</td>
-                  <td>HTML</td>
-                  <td>1</td>
-                  <td>
-                    <div class="actions">
-                      <button class="btn btn-sm" onclick="editTheme(1)">Modifier</button>
-                      <button class="btn btn-sm btn-destructive" onclick="deleteTheme(1)">Supprimer</button>
-                    </div>
-                  </td>
-                </tr>
+                <% quizzes.forEach(theme => { %>
+                  <tr>
+                    <td><%= theme.id %></td>
+                    <td><%= theme.name %></td>
+                    <td><%= theme.questions.length %></td>
+                    <td>
+                      <div class="actions">
+                        <button class="btn btn-sm" onclick="editTheme(<%= theme.id %>)">Modifier</button>
+                        <button class="btn btn-sm btn-destructive" onclick="deleteTheme(<%= theme.id %>)">Supprimer</button>
+                      </div>
+                    </td>
+                  </tr>
+                <% }) %>
+
               </tbody>
             </table>
           </div>
@@ -807,45 +784,27 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>#U001</td>
-                  <td>Alexandre Martin</td>
-                  <td>alexandre.m@email.com</td>
-                  <td><span class="badge badge-warning">Admin</span></td>
-                  <td>15/01/2025</td>
-                  <td>
-                    <div class="actions">
-                      <button class="btn btn-sm" onclick="editUser(1)">Modifier</button>
-                      <button class="btn btn-sm btn-destructive" onclick="deleteUser(1)">Supprimer</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#U002</td>
-                  <td>Sophie Laurent</td>
-                  <td>sophie.l@email.com</td>
-                  <td><span class="badge badge-info">Utilisateur</span></td>
-                  <td>20/01/2025</td>
-                  <td>
-                    <div class="actions">
-                      <button class="btn btn-sm" onclick="editUser(2)">Modifier</button>
-                      <button class="btn btn-sm btn-destructive" onclick="deleteUser(2)">Supprimer</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#U003</td>
-                  <td>Thomas Dubois</td>
-                  <td>thomas.d@email.com</td>
-                  <td><span class="badge badge-info">Utilisateur</span></td>
-                  <td>25/01/2025</td>
-                  <td>
-                    <div class="actions">
-                      <button class="btn btn-sm" onclick="editUser(3)">Modifier</button>
-                      <button class="btn btn-sm btn-destructive" onclick="deleteUser(3)">Supprimer</button>
-                    </div>
-                  </td>
-                </tr>
+                <% users.forEach(user => { %>
+                  <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.username %></td>
+                    <td><%= user.email %></td>
+                    <td>
+                      <span class="badge <%= user.role === 'admin' ? 'badge-warning' : 'badge-info' %>"><%= user.role %>
+                      </span>
+                    </td>
+                    <td>
+                      <%= new Date(user.created_at).toLocaleDateString() %>
+                    </td>
+                    <td>
+                      <div class="actions">
+                        <button class="btn btn-sm" onclick="editUser(<%= user.id %>)">Modifier</button>
+                        <button class="btn btn-sm btn-destructive" onclick="deleteUser(<%= user.id %>)">Supprimer</button>
+                      </div>
+                    </td>
+                  </tr>
+                <% }) %>
+
               </tbody>
             </table>
           </div>
@@ -958,7 +917,7 @@
   </main>
 
   <!-- Quiz Modal -->
-  <div id="quizModal" class="modal-overlay hidden">
+  <!-- <div id="quizModal" class="modal-overlay hidden">
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-title" id="quizModalTitle">Nouveau Quiz</h2>
@@ -969,38 +928,22 @@
           <input type="text" class="form-input" name="title" required>
         </div>
         <div class="form-group">
-          <label class="form-label">Description</label>
-          <textarea class="form-textarea" name="description" required></textarea>
-        </div>
-        <div class="form-group">
           <label class="form-label">Thème</label>
           <select class="form-select" name="theme" required>
             <option value="">Sélectionner un thème</option>
-            <option value="html">HTML</option>
-            <option value="css">CSS</option>
-            <option value="javascript">JavaScript</option>
+              <% quizzes.forEach(theme => { %>
+                <option value="<%= theme.id %>"><%= theme.name %></option>
+              <% }) %>
           </select>
         </div>
-        <div class="form-group">
-          <label class="form-label">Niveau</label>
-          <select class="form-select" name="level" required>
-            <option value="">Sélectionner un niveau</option>
-            <option value="beginner">Débutant</option>
-            <option value="intermediate">Intermédiaire</option>
-            <option value="advanced">Avancé</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Durée (minutes)</label>
-          <input type="number" class="form-input" name="duration" min="1" required>
-        </div>
+
         <div class="modal-actions">
           <button type="button" class="btn" onclick="closeQuizModal()">Annuler</button>
           <button type="submit" class="btn btn-primary">Enregistrer</button>
         </div>
       </form>
     </div>
-  </div>
+  </div> -->
 
   <!-- Question Modal -->
   <div id="questionModal" class="modal-overlay hidden">
@@ -1008,37 +951,37 @@
       <div class="modal-header">
         <h2 class="modal-title" id="questionModalTitle">Nouvelle Question</h2>
       </div>
-      <form id="questionForm">
+      <form id="questionForm" action="/questions" method="POST">
         <div class="form-group">
           <label class="form-label">Quiz</label>
-          <select class="form-select" name="quiz" required>
+          <select class="form-select" name="thematique_id" required>
             <option value="">Sélectionner un quiz</option>
-            <option value="1">Les Bases HTML</option>
-            <option value="2">CSS Avancé</option>
-            <option value="3">JavaScript ES6+</option>
+            <% quizzes.forEach(theme => { %>
+              <option value="<%= theme.id %>"><%= theme.name %></option>
+            <% }) %>
           </select>
         </div>
         <div class="form-group">
           <label class="form-label">Question</label>
           <textarea class="form-textarea" name="question" required></textarea>
         </div>
-        <div class="form-group">
-          <label class="form-label">Réponse A</label>
-          <input type="text" class="form-input" name="optionA" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Réponse B</label>
-          <input type="text" class="form-input" name="optionB" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Réponse C</label>
-          <input type="text" class="form-input" name="optionC" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Réponse D</label>
-          <input type="text" class="form-input" name="optionD" required>
-        </div>
-        <div class="form-group">
+ <div class="form-group">
+  <label>Réponse A</label>
+  <input type="text" class="form-input" id="optionA" name="options[]" required>
+</div>
+<div class="form-group">
+  <label>Réponse B</label>
+  <input type="text" class="form-input" id="optionB" name="options[]" required>
+</div>
+<div class="form-group">
+  <label>Réponse C</label>
+  <input type="text" class="form-input" id="optionC" name="options[]" required>
+</div>
+<div class="form-group">
+  <label>Réponse D</label>
+  <input type="text" class="form-input" id="optionD" name="options[]" required>
+</div>
+        <!-- <div class="form-group">
           <label class="form-label">Bonne Réponse</label>
           <select class="form-select" name="correctAnswer" required>
             <option value="">Sélectionner la bonne réponse</option>
@@ -1047,11 +990,16 @@
             <option value="C">C</option>
             <option value="D">D</option>
           </select>
-        </div>
+        </div> -->
+        
+        
+        
         <div class="form-group">
-          <label class="form-label">Explication</label>
-          <textarea class="form-textarea" name="explanation"></textarea>
-        </div>
+  <label>Bonne Réponse</label>
+  <select class="form-select" id="correctAnswer" name="correct_answers[]" required>
+    <option value="">Sélectionner la bonne réponse</option>
+  </select>
+</div>
         <div class="modal-actions">
           <button type="button" class="btn" onclick="closeQuestionModal()">Annuler</button>
           <button type="submit" class="btn btn-primary">Enregistrer</button>
@@ -1070,22 +1018,6 @@
         <div class="form-group">
           <label class="form-label">Nom du Thème</label>
           <input type="text" class="form-input" name="name" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Couleur</label>
-          <select class="form-select" name="color" required>
-            <option value="">Sélectionner une couleur</option>
-            <option value="orange">Orange</option>
-            <option value="blue">Bleu</option>
-            <option value="green">Vert</option>
-            <option value="yellow">Jaune</option>
-            <option value="purple">Violet</option>
-            <option value="red">Rouge</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Description</label>
-          <textarea class="form-textarea" name="description"></textarea>
         </div>
         <div class="modal-actions">
           <button type="button" class="btn" onclick="closeThemeModal()">Annuler</button>
@@ -1147,16 +1079,16 @@
     });
 
     // Quiz Modal Functions
-    function openQuizModal(id = null) {
-      document.getElementById('quizModal').classList.remove('hidden');
-      if (id) {
-        document.getElementById('quizModalTitle').textContent = 'Modifier le Quiz';
-        // Load quiz data here
-      } else {
-        document.getElementById('quizModalTitle').textContent = 'Nouveau Quiz';
-        document.getElementById('quizForm').reset();
-      }
-    }
+    // function openQuizModal(id = null) {
+    //   document.getElementById('quizModal').classList.remove('hidden');
+    //   if (id) {
+    //     document.getElementById('quizModalTitle').textContent = 'Modifier le Quiz';
+    //     // Load quiz data here
+    //   } else {
+    //     document.getElementById('quizModalTitle').textContent = 'Nouveau Quiz';
+    //     document.getElementById('quizForm').reset();
+    //   }
+    // }
 
     function closeQuizModal() {
       document.getElementById('quizModal').classList.add('hidden');
@@ -1188,10 +1120,57 @@
       document.getElementById('questionModal').classList.add('hidden');
     }
 
-    function editQuestion(id) {
-      openQuestionModal(id);
+    // function editQuestion(id) {
+    //   openQuestionModal(id);
+    // }
+async function editQuestion(id) {
+      try {
+        const response = await fetch(`/questions/${id}`);
+        if (!response.ok) throw new Error('Failed to fetch question');
+        
+        const question = await response.json();
+        
+        // Parse JSON strings if needed
+        const options = typeof question.options === 'string' 
+          ? JSON.parse(question.options) 
+          : question.options;
+        const correctAnswers = typeof question.correct_answers === 'string' 
+          ? JSON.parse(question.correct_answers) 
+          : question.correct_answers;
+        
+        // Open modal and populate fields
+        document.getElementById('questionModal').classList.remove('hidden');
+        document.getElementById('questionModalTitle').textContent = 'Modifier la Question';
+        
+        // Set form action for update
+        const form = document.getElementById('questionForm');
+        form.action = `/questions/${id}`;
+        form.dataset.method = 'PUT';
+        
+        // Populate fields
+        document.querySelector('[name="thematique_id"]').value = question.thematique_id;
+        document.querySelector('[name="question"]').value = question.question;
+        
+        // Populate options
+        if (options && options.length >= 4) {
+          document.getElementById('optionA').value = options[0];
+          document.getElementById('optionB').value = options[1];
+          document.getElementById('optionC').value = options[2];
+          document.getElementById('optionD').value = options[3];
+          
+          // Update correct answer dropdown
+          updateCorrectOptions();
+          
+          // Set correct answer
+          if (correctAnswers && correctAnswers.length > 0) {
+            document.getElementById('correctAnswer').value = correctAnswers[0];
+          }
+        }
+      } catch (error) {
+        console.error('Error loading question:', error);
+        alert('Erreur lors du chargement de la question');
+      }
     }
-
     function deleteQuestion(id) {
       if (confirm('Êtes-vous sûr de vouloir supprimer cette question ?')) {
         console.log('Deleting question:', id);
@@ -1252,21 +1231,15 @@
     }
 
     // Form Submissions
-    document.getElementById('quizForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      console.log('Quiz data:', Object.fromEntries(formData));
-      alert('Quiz enregistré avec succès !');
-      closeQuizModal();
-    });
+    // document.getElementById('quizForm').addEventListener('submit', (e) => {
+    //   e.preventDefault();
+    //   const formData = new FormData(e.target);
+    //   console.log('Quiz data:', Object.fromEntries(formData));
+    //   alert('Quiz enregistré avec succès !');
+    //   closeQuizModal();
+    // });
 
-    document.getElementById('questionForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      console.log('Question data:', Object.fromEntries(formData));
-      alert('Question enregistrée avec succès !');
-      closeQuestionModal();
-    });
+
 
     document.getElementById('themeForm').addEventListener('submit', (e) => {
       e.preventDefault();
@@ -1304,6 +1277,67 @@
         row.style.display = text.includes(searchTerm) ? '' : 'none';
       });
     });
+
+
+
+
+const optionInputs = ["A", "B", "C", "D"];
+  const correctSelect = document.getElementById("correctAnswer");
+
+  function updateCorrectOptions() {
+    correctSelect.innerHTML = '<option value="">Sélectionner la bonne réponse</option>';
+    optionInputs.forEach(letter => {
+      const input = document.getElementById("option" + letter);
+      if (input && input.value.trim() !== "") {
+        const opt = document.createElement("option");
+        opt.value = input.value;
+        opt.textContent = `${letter}: ${input.value}`;
+        correctSelect.appendChild(opt);
+      }
+    });
+  }
+
+  // Update dropdown when user types in any option field
+  optionInputs.forEach(letter => {
+    document.getElementById("option" + letter).addEventListener("input", updateCorrectOptions);
+  });
+
+  // Handle form submission
+  document.getElementById('questionForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); // Prevent default form submission
+    
+    const formData = new FormData(e.target);
+    const data = {
+      thematique_id: parseInt(formData.get('thematique_id')),
+      question: formData.get('question'),
+      options: formData.getAll('options[]'),
+      correct_answers: formData.getAll('correct_answers[]')
+    };
+    
+    console.log('Form data being submitted:', JSON.stringify(data, null, 2));
+    
+    try {
+      const response = await fetch('/questions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      });
+      
+      if (response.ok) {
+        alert('Question enregistrée avec succès !');
+        closeQuestionModal();
+        location.reload(); // Refresh to show new question
+      } else {
+        const error = await response.json();
+        alert('Erreur: ' + (error.message || 'Impossible d\'enregistrer la question'));
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Erreur de connexion au serveur');
+    }
+  });
   </script>
 </body>
 </html>
