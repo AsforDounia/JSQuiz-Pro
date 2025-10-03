@@ -1,0 +1,49 @@
+<!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo-section">
+          <div class="logo-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4" />
+              <polyline points="9,11 9,9 15,9 15,11" />
+              <polyline points="9,9 9,4 15,4 15,9" />
+            </svg>
+          </div>
+          <span class="logo-text">DevQuiz Pro</span>
+          <% if (user && user.role === 'admin') { %>
+            <span class="admin-badge">ADMIN</span>
+            <% } %>
+        </div>
+        <div>
+            <% if (!user) { %>
+                <div id="authSection" class="auth-section">
+                    <a href="auth/login" class="btn">Login</a>
+                    <a href="auth/register" class="btn btn-primary">Register</a>
+                </div>
+            <% } else { %>
+              <% if (typeof isIndex !== 'undefined' && isIndex) { %>
+                <div class="header-actions">
+                    <% if (user.role === 'admin') { %>
+                        <a href="/admin/dashboard" class="btn btn-primary">Dashboard</a>
+                    <% } else { %>
+                        <a href="/users/dashboard" class="btn btn-primary">Dashboard</a>
+                    <% } %>
+                    <!-- <a href="/" class="btn">Accueil</a> -->
+                    <form action="/auth/logout" method="POST">
+                        <button type="submit" class="btn">Déconnexion</button>
+                    </form>
+                </div>
+              <% } else { %>
+                <div class="header-actions">
+                    <a href="/" class="btn">Accueil</a>
+                    <form action="/auth/logout" method="POST">
+                        <button type="submit" class="btn">Déconnexion</button>
+                    </form>
+                </div>
+              <% } %>
+            <% } %>
+        </div>
+      </div>
+    </div>
+  </header>

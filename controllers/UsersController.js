@@ -54,7 +54,12 @@ module.exports = {
             bestScore
         };
 
-        res.render('user/dashboard', { topPlayers, user, userStats });
+        res.render('user/dashboard', { 
+            topPlayers,
+            userStats,
+            user: req.user,
+            layout: 'layouts/main',
+        });
     },
     // Fetch all users
     async getAll(req, res) {
