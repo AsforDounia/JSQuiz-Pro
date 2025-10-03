@@ -1,896 +1,350 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard - DevQuiz Pro</title>
-    <!-- <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
 
-    :root {
-      --background: #ffffff;
-      --foreground: #1a1a1a;
-      --card: #ffffff;
-      --primary: #1a1a1a;
-      --primary-foreground: #ffffff;
-      --secondary: #f5f5f5;
-      --muted-foreground: #737373;
-      --destructive: #ef4444;
-      --success: #10b981;
-      --info: #3b82f6;
-      --border: #e5e5e5;
-      --radius: 6px;
-      --orange: #f97316;
-      --blue: #3b82f6;
-      --yellow: #eab308;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
-      line-height: 1.5;
-      color: var(--foreground);
-      background-color: rgba(0, 0, 0, 0.02);
-    }
-
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-
-    /* Header */
-    .site-header {
-      background-color: rgba(255, 255, 255, 0.9);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(8px);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
-
-    .header-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 0;
-      gap: 1rem;
-    }
-
-    .logo-section {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .logo-icon {
-      width: 2rem;
-      height: 2rem;
-      border-radius: 0.5rem;
-      background: linear-gradient(135deg, var(--primary) 0%, #333 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .logo-icon svg {
-      width: 1.25rem;
-      height: 1.25rem;
-      color: white;
-    }
-
-    .logo-text {
-      font-size: 1.5rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--primary) 0%, #333 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .admin-badge {
-      background-color: var(--destructive);
-      color: white;
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-left: 0.5rem;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1rem;
-      border-radius: var(--radius);
-      font-size: 0.875rem;
-      font-weight: 500;
-      border: 1px solid var(--border);
-      background-color: var(--background);
-      color: var(--foreground);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-decoration: none;
-    }
-
-    .btn:hover {
-      background-color: var(--secondary);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary) 0%, #333 100%);
-      color: white;
-      border-color: var(--primary);
-    }
-
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #333 0%, #000 100%);
-    }
-
-    .btn-success {
-      background-color: var(--success);
-      color: white;
-      border-color: var(--success);
-    }
-
-    .btn-destructive {
-      background-color: var(--destructive);
-      color: white;
-      border-color: var(--destructive);
-    }
-
-    .btn-sm {
-      padding: 0.375rem 0.75rem;
-      font-size: 0.75rem;
-    }
-
-    /* Main Content */
-    .admin-main {
-      padding: 2rem 0;
-      min-height: calc(100vh - 4rem);
-    }
-
-    .admin-header {
-      margin-bottom: 2rem;
-    }
-
-    .admin-title {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .admin-description {
-      color: var(--muted-foreground);
-    }
-
-    /* Stats */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-
-    .stat-card {
-      background-color: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .stat-icon {
-      width: 3rem;
-      height: 3rem;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .stat-icon-users {
-      background-color: rgba(59, 130, 246, 0.1);
-      color: var(--info);
-    }
-
-    .stat-icon-quizzes {
-      background-color: rgba(249, 115, 22, 0.1);
-      color: var(--orange);
-    }
-
-    .stat-icon-questions {
-      background-color: rgba(16, 185, 129, 0.1);
-      color: var(--success);
-    }
-
-    .stat-icon-themes {
-      background-color: rgba(234, 179, 8, 0.1);
-      color: var(--yellow);
-    }
-
-    .stat-content {
-      flex: 1;
-    }
-
-    .stat-value {
-      font-size: 2rem;
-      font-weight: 700;
-      line-height: 1;
-    }
-
-    .stat-label {
-      font-size: 0.875rem;
-      color: var(--muted-foreground);
-      margin-top: 0.25rem;
-    }
-
-    /* Tabs */
-    .tabs-container {
-      margin-bottom: 2rem;
-    }
-
-    .tabs-list {
-      display: flex;
-      gap: 0.5rem;
-      border-bottom: 2px solid var(--border);
-      overflow-x: auto;
-    }
-
-    .tab-button {
-      padding: 0.75rem 1.5rem;
-      border: none;
-      background: none;
-      color: var(--muted-foreground);
-      font-weight: 500;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -2px;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-
-    .tab-button:hover {
-      color: var(--foreground);
-    }
-
-    .tab-button.active {
-      color: var(--primary);
-      border-bottom-color: var(--primary);
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    /* Section */
-    .section {
-      background-color: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-bottom: 2rem;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .section-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
-
-    /* Table */
-    .table-container {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 0.75rem;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-    }
-
-    th {
-      font-weight: 600;
-      color: var(--muted-foreground);
-      font-size: 0.875rem;
-      background-color: var(--secondary);
-    }
-
-    tr:hover {
-      background-color: rgba(0, 0, 0, 0.02);
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: 500;
-    }
-
-    .badge-success {
-      background-color: rgba(16, 185, 129, 0.1);
-      color: var(--success);
-    }
-
-    .badge-warning {
-      background-color: rgba(249, 115, 22, 0.1);
-      color: var(--orange);
-    }
-
-    .badge-info {
-      background-color: rgba(59, 130, 246, 0.1);
-      color: var(--info);
-    }
-
-    .actions {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    /* Modal */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      padding: 1rem;
-    }
-
-    .modal-overlay.hidden {
-      display: none;
-    }
-
-    .modal-content {
-      background-color: var(--card);
-      border-radius: var(--radius);
-      padding: 2rem;
-      max-width: 600px;
-      width: 100%;
-      max-height: 80vh;
-      overflow-y: auto;
-    }
-
-    .modal-header {
-      margin-bottom: 1.5rem;
-    }
-
-    .modal-title {
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-
-    .form-group {
-      margin-bottom: 1rem;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 0.875rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    }
-
-    .form-input, .form-select, .form-textarea {
-      width: 100%;
-      padding: 0.5rem 0.75rem;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background-color: var(--background);
-      color: var(--foreground);
-      font-size: 0.875rem;
-    }
-
-    .form-textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .form-input:focus, .form-select:focus, .form-textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 0.75rem;
-      margin-top: 1.5rem;
-    }
-
-    .modal-actions .btn {
-      flex: 1;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 3rem 2rem;
-      color: var(--muted-foreground);
-    }
-
-    .empty-state svg {
-      margin-bottom: 1rem;
-      opacity: 0.5;
-    }
-
-    /* Search and Filter */
-    .toolbar {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .search-box {
-      flex: 1;
-      min-width: 250px;
-    }
-
-    @media (max-width: 768px) {
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .section-header {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 1rem;
-      }
-
-      .toolbar {
-        flex-direction: column;
-      }
-
-      .search-box {
-        min-width: 100%;
-      }
-
-      table {
-        font-size: 0.875rem;
-      }
-
-      th, td {
-        padding: 0.5rem;
-      }
-    }
-  </style> -->
-
-    <link rel="stylesheet" href="/css/style.css" />
-  </head>
-  <body>
-    <!-- Header -->
-    <pre>
-  <!-- <%= JSON.stringify(users, null, 2) %> -->
-</pre>
-    <header class="site-header">
-      <div class="container">
-        <div class="header-content">
-          <div class="logo-section">
-            <div class="logo-icon">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"
-                />
-                <polyline points="9,11 9,9 15,9 15,11" />
-                <polyline points="9,9 9,4 15,4 15,9" />
-              </svg>
-            </div>
-            <span class="logo-text">DevQuiz Pro</span>
-            <span class="admin-badge">ADMIN</span>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - DevQuiz Pro</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo-section">
+          <div class="logo-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4" />
+              <polyline points="9,11 9,9 15,9 15,11" />
+              <polyline points="9,9 9,4 15,4 15,9" />
+            </svg>
           </div>
-          <div>
-            <form action="/auth/logout" method="POST">
-              <button type="submit" class="btn">Déconnexion</button>
-            </form>
+          <span class="logo-text">DevQuiz Pro</span>
+          <span class="admin-badge">ADMIN</span>
+        </div>
+        <div>
+          <form action="/auth/logout" method="POST">
+            <button type="submit" class="btn">Déconnexion</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <div class="container">
+
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-users">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="totalUsers"><%= users.length %></div>
+            <div class="stat-label">Utilisateurs</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-quizzes">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14,2 14,8 20,8" />
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="totalQuizzes"><%= quizzes.length %></div>
+            <div class="stat-label">Quiz</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-questions">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="totalQuestions">
+              <%= quizzes.reduce((sum, theme) => sum + (theme.questions ? theme.questions.length : 0), 0) %>
+            </div>
+            <div class="stat-label">Questions</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-themes">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+              <polyline points="3.27,6.96 12,12.01 20.73,6.96" />
+              <line x1="12" y1="22.08" x2="12" y2="12" />
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="totalThemes"><%= quizzes.length %></div>
+            <div class="stat-label">Thèmes</div>
           </div>
         </div>
       </div>
-    </header>
 
-    <!-- Main Content -->
-    <main class="admin-main">
-      <div class="container">
-        <!-- Stats -->
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon stat-icon-users">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-              </svg>
-            </div>
-            <div class="stat-content">
-              <div class="stat-value" id="totalUsers">156</div>
-              <div class="stat-label">Utilisateurs</div>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon stat-icon-quizzes">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-                />
-                <polyline points="14,2 14,8 20,8" />
-              </svg>
-            </div>
-            <div class="stat-content">
-              <div class="stat-value" id="totalQuizzes">3</div>
-              <div class="stat-label">Quiz</div>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon stat-icon-questions">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                <line x1="12" y1="17" x2="12.01" y2="17" />
-              </svg>
-            </div>
-            <div class="stat-content">
-              <div class="stat-value" id="totalQuestions">45</div>
-              <div class="stat-label">Questions</div>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon stat-icon-themes">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
-                />
-                <polyline points="3.27,6.96 12,12.01 20.73,6.96" />
-                <line x1="12" y1="22.08" x2="12" y2="12" />
-              </svg>
-            </div>
-            <div class="stat-content">
-              <div class="stat-value" id="totalThemes">3</div>
-              <div class="stat-label">Thèmes</div>
-            </div>
-          </div>
+      <!-- Tabs -->
+      <div class="tabs-container">
+        <div class="tabs-list">
+          <button class="tab-button active" data-tab="quizzes">Quiz</button>
+          <button class="tab-button" data-tab="questions">Questions</button>
+          <button class="tab-button" data-tab="themes">Thèmes</button>
+          <button class="tab-button" data-tab="users">Utilisateurs</button>
+          <button class="tab-button" data-tab="history">Historique Utilisateurs</button> <!-- NEW TAB -->
+          <button class="tab-button" data-tab="export">Export</button>
         </div>
+      </div>
 
-        <!-- Tabs -->
-        <div class="tabs-container">
-          <div class="tabs-list">
-            <button class="tab-button active" data-tab="quizzes">Quiz</button>
-            <button class="tab-button" data-tab="questions">Questions</button>
-            <button class="tab-button" data-tab="themes">Thèmes</button>
-            <button class="tab-button" data-tab="users">Utilisateurs</button>
-            <button class="tab-button" data-tab="export">Export</button>
-          </div>
-        </div>
+      <!-- Quizzes Tab -->
+      <div class="tab-content active" id="quizzes-tab">
+        <div class="section">
 
-        <!-- Quizzes Tab -->
-        <div class="tab-content active" id="quizzes-tab">
-          <div class="section">
-            <div class="toolbar">
-              <div class="search-box">
-                <input
-                  type="text"
-                  class="form-input"
-                  placeholder="Rechercher un quiz..."
-                  id="quizSearch"
-                />
-              </div>
-              <select class="form-select" id="quizFilter">
-                <option value="all">Tous les thèmes</option>
-                <% quizzes.forEach(theme => { %>
-                <option value="<%= theme.id %>"><%= theme.name %></option>
+          <div class="toolbar">
+            <div class="search-box">
+              <input type="text" class="form-input" placeholder="Rechercher un quiz..." id="quizSearch">
+            </div>
+            <select class="form-select" id="quizFilter">
+              <option value="all">Tous les thèmes</option>
+              <% quizzes.forEach(theme=> { %>
+                <option value="<%= theme.id %>">
+                  <%= theme.name %>
+                </option>
                 <% }) %>
-              </select>
-            </div>
+            </select>
+          </div>
 
-            <div class="table-container">
-              <table id="quizzesTable">
-                <thead>
+          <div class="table-container">
+            <table id="quizzesTable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Thème Name</th>
+                  <th>Questions</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% quizzes.forEach(theme=> { %>
                   <tr>
-                    <th>ID</th>
-                    <th>Thème Name</th>
-                    <th>Questions</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% quizzes.forEach(theme => { %>
-                  <tr>
-                    <td><%= theme.id %></td>
-                    <td><%= theme.name %></td>
-                    <td><%= theme.questions.length %></td>
+                    <td>
+                      <%= theme.id %>
+                    </td>
+                    <td>
+                      <%= theme.name %>
+                    </td>
+                    <td>
+                      <%= theme.questions.length %>
+                    </td>
                     <td>
                       <div class="actions">
                         <!-- <button class="btn btn-sm" onclick="editQuiz(<%= theme.id %>)">Modifier</button> -->
-                        <button
-                          class="btn btn-sm btn-destructive"
-                          onclick="deleteQuiz(<%= theme.id %>)"
-                        >
-                          Supprimer
-                        </button>
+                        <button class="btn btn-sm btn-destructive"
+                          onclick="deleteQuiz(<%= theme.id %>)">Supprimer</button>
                       </div>
                     </td>
                   </tr>
                   <% }) %>
-                </tbody>
-              </table>
-            </div>
+              </tbody>
+            </table>
           </div>
         </div>
+      </div>
 
-        <!-- Questions Tab -->
-        <div class="tab-content" id="questions-tab">
-          <div class="section">
-            <div class="section-header">
-              <h2 class="section-title">Gestion des Questions</h2>
-              <button class="btn btn-primary" onclick="openQuestionModal()">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <line x1="12" y1="5" x2="12" y2="19" />
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
-                Nouvelle Question
-              </button>
+      <!-- Questions Tab -->
+      <div class="tab-content" id="questions-tab">
+        <div class="section">
+          <div class="section-header">
+            <h2 class="section-title">Gestion des Questions</h2>
+            <button class="btn btn-primary" onclick="openQuestionModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              Nouvelle Question
+            </button>
+          </div>
+
+          <div class="toolbar">
+            <div class="search-box">
+              <input type="text" class="form-input" placeholder="Rechercher une question...">
             </div>
-
-            <div class="toolbar">
-              <div class="search-box">
-                <input
-                  type="text"
-                  class="form-input"
-                  placeholder="Rechercher une question..."
-                />
-              </div>
-              <select class="form-select">
-                <option value="all">Tous les quiz</option>
-                <% quizzes.forEach(theme => { %>
-                <option value="<%= theme.id %>"><%= theme.name %></option>
+            <select class="form-select">
+              <option value="all">Tous les quiz</option>
+              <% quizzes.forEach(theme=> { %>
+                <option value="<%= theme.id %>">
+                  <%= theme.name %>
+                </option>
                 <% }) %>
-              </select>
-            </div>
+            </select>
+          </div>
 
-            <div class="table-container">
-              <table id="questionsTable">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Question</th>
-                    <th>Quiz</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% quizzes.forEach(theme => { %> <% theme.questions.forEach(q
-                  => { %>
-                  <tr>
-                    <td><%= q.id %></td>
-                    <td><%= q.question %></td>
-                    <td><%= theme.name %></td>
-                    <td>
-                      <div class="actions">
-                        <button
-                          class="btn btn-sm"
-                          onclick="editQuestion(<%= q.id %>)"
-                        >
-                          Modifier
-                        </button>
-                        <button
-                          class="btn btn-sm btn-destructive"
-                          onclick="deleteQuestion(<%= q.id %>)"
-                        >
-                          Supprimer
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <% }) %> <% }) %>
-                </tbody>
-              </table>
-            </div>
+          <div class="table-container">
+            <table id="questionsTable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Question</th>
+                  <th>Quiz</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% quizzes.forEach(theme=> { %>
+                  <% theme.questions.forEach(q=> { %>
+                    <tr>
+                      <td>
+                        <%= q.id %>
+                      </td>
+                      <td>
+                        <%= q.question %>
+                      </td>
+                      <td>
+                        <%= theme.name %>
+                      </td>
+                      <td>
+                        <div class="actions">
+                          <button class="btn btn-sm" onclick="editQuestion(<%= q.id %>)">Modifier</button>
+                          <button class="btn btn-sm btn-destructive"
+                            onclick="deleteQuestion(<%= q.id %>)">Supprimer</button>
+                        </div>
+                      </td>
+
+                    </tr>
+                    <% }) %>
+                      <% }) %>
+              </tbody>
+            </table>
           </div>
         </div>
+      </div>
 
-        <!-- Themes Tab -->
-        <div class="tab-content" id="themes-tab">
-          <div class="section">
-            <div class="section-header">
-              <h2 class="section-title">Gestion des Thèmes</h2>
-              <button class="btn btn-primary" onclick="openThemeModal()">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <line x1="12" y1="5" x2="12" y2="19" />
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
-                Nouveau Thème
-              </button>
+      <!-- Themes Tab -->
+      <div class="tab-content" id="themes-tab">
+        <div class="section">
+          <div class="section-header">
+            <h2 class="section-title">Gestion des Thèmes</h2>
+            <button class="btn btn-primary" onclick="openThemeModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              Nouveau Thème
+            </button>
+          </div>
+
+          <div class="toolbar">
+            <div class="search-box">
+              <input type="text" class="form-input" placeholder="Rechercher un thème...">
             </div>
+          </div>
 
-            <div class="toolbar">
-              <div class="search-box">
-                <input
-                  type="text"
-                  class="form-input"
-                  placeholder="Rechercher un thème..."
-                />
-              </div>
-            </div>
-
-            <div class="table-container">
-              <table id="themesTable">
-                <thead>
+          <div class="table-container">
+            <table id="themesTable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nom</th>
+                  <th>Number of Questions</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% quizzes.forEach(theme=> { %>
                   <tr>
-                    <th>ID</th>
-                    <th>Nom</th>
-                    <th>Number of Questions</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% quizzes.forEach(theme => { %>
-                  <tr>
-                    <td><%= theme.id %></td>
-                    <td><%= theme.name %></td>
-                    <td><%= theme.questions.length %></td>
+                    <td>
+                      <%= theme.id %>
+                    </td>
+                    <td>
+                      <%= theme.name %>
+                    </td>
+                    <td>
+                      <%= theme.questions.length %>
+                    </td>
                     <td>
                       <div class="actions">
-                        <button
-                          class="btn btn-sm"
-                          onclick="editTheme(<%= theme.id %>)"
-                        >
-                          Modifier
-                        </button>
-                        <button
-                          class="btn btn-sm btn-destructive"
-                          onclick="deleteTheme(<%= theme.id %>)"
-                        >
-                          Supprimer
-                        </button>
+                        <button class="btn btn-sm" onclick="editTheme(<%= theme.id %>)">Modifier</button>
+                        <button class="btn btn-sm btn-destructive"
+                          onclick="deleteTheme(<%= theme.id %>)">Supprimer</button>
                       </div>
                     </td>
                   </tr>
                   <% }) %>
-                </tbody>
-              </table>
-            </div>
+
+              </tbody>
+            </table>
           </div>
         </div>
+      </div>
 
-        <!-- Users Tab -->
-        <div class="tab-content" id="users-tab">
-          <div class="section">
-            <div class="section-header">
-              <h2 class="section-title">Gestion des Utilisateurs</h2>
-              <button class="btn btn-primary" onclick="openUserModal()">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <line x1="12" y1="5" x2="12" y2="19" />
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
-                Nouvel Utilisateur
-              </button>
+      <!-- Users Tab -->
+      <div class="tab-content" id="users-tab">
+        <div class="section">
+          <div class="section-header">
+            <h2 class="section-title">Gestion des Utilisateurs</h2>
+            <button class="btn btn-primary" onclick="openUserModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              Nouvel Utilisateur
+            </button>
+          </div>
+
+          <div class="toolbar">
+            <div class="search-box">
+              <input type="text" class="form-input" placeholder="Rechercher un utilisateur...">
             </div>
+            <select class="form-select">
+              <option value="all">Tous les rôles</option>
+              <option value="admin">Admin</option>
+              <option value="user">Utilisateur</option>
+            </select>
+          </div>
 
-            <div class="toolbar">
-              <div class="search-box">
-                <input
-                  type="text"
-                  class="form-input"
-                  placeholder="Rechercher un utilisateur..."
-                />
-              </div>
-              <select class="form-select">
-                <option value="all">Tous les rôles</option>
-                <option value="admin">Admin</option>
-                <option value="user">Utilisateur</option>
-              </select>
-            </div>
-
-            <div class="table-container">
-              <table>
-                <thead>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nom</th>
+                  <th>Email</th>
+                  <th>Rôle</th>
+                  <th>Inscrit le</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% users.forEach(user=> { %>
                   <tr>
-                    <th>ID</th>
-                    <th>Nom</th>
-                    <th>Email</th>
-                    <th>Rôle</th>
-                    <th>Inscrit le</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% users.forEach(user => { %>
-                  <tr>
-                    <td><%= user.id %></td>
-                    <td><%= user.username %></td>
-                    <td><%= user.email %></td>
                     <td>
-                      <span
-                        class="badge <%= user.role === 'admin' ? 'badge-warning' : 'badge-info' %>"
-                        ><%= user.role %>
+                      <%= user.id %>
+                    </td>
+                    <td>
+                      <%= user.username %>
+                    </td>
+                    <td>
+                      <%= user.email %>
+                    </td>
+                    <td>
+                      <span class="badge <%= user.role === 'admin' ? 'badge-warning' : 'badge-info' %>">
+                        <%= user.role %>
                       </span>
                     </td>
                     <td>
@@ -898,270 +352,185 @@
                     </td>
                     <td>
                       <div class="actions">
-                        <button
-                          class="btn btn-sm"
-                          onclick="editUser(<%= user.id %>)"
-                        >
-                          Modifier
-                        </button>
-                        <button
-                          class="btn btn-sm btn-destructive"
-                          onclick="deleteUser(<%= user.id %>)"
-                        >
-                          Supprimer
-                        </button>
+                        <button class="btn btn-sm" onclick="editUser(<%= user.id %>)">Modifier</button>
+                        <button class="btn btn-sm btn-destructive"
+                          onclick="deleteUser(<%= user.id %>)">Supprimer</button>
                       </div>
                     </td>
                   </tr>
                   <% }) %>
-                </tbody>
-              </table>
-            </div>
+
+              </tbody>
+            </table>
           </div>
         </div>
+      </div>
 
-        <!-- Export Tab -->
-        <div class="tab-content" id="export-tab">
-          <div class="section">
-            <div class="section-header">
-              <h2 class="section-title">Exportation des Données</h2>
+      <!-- Users History Tab -->
+      <div class="tab-content" id="history-tab">
+        <div class="section">
+          <div class="section-header">
+            <h2 class="section-title">Historique des Scores des Utilisateurs</h2>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Utilisateur</th>
+                  <th>Email</th>
+                  <th>Score</th>
+                  <th>Badge</th>
+                  <th>Thème</th>
+                  <th>Date de jeu</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% users.forEach(user => { %>
+                  <% if(user.scores && user.scores.length > 0) { %>
+                    <% user.scores.forEach(score => { 
+                      let badge = '';
+                      let badgeClass = '';
+                      let crownColor = '';
+                      if(score.score < 33) {
+                        badge = 'Débutant';
+                        badgeClass = 'badge-info';
+                        crownColor = '#3b82f6';
+                      } else if(score.score < 67) {
+                        badge = 'Intermédiaire';
+                        badgeClass = 'badge-warning';
+                        crownColor = '#eab308';
+                      } else {
+                        badge = 'Expert';
+                        badgeClass = 'badge-success';
+                        crownColor = '#10b981';
+                      }
+                    %>
+                      <tr>
+                        <td><%= user.username %></td>
+                        <td><%= user.email %></td>
+                        <td><%= score.score %></td>
+                        <td>
+                          <span class="badge <%= badgeClass %>"><%= badge %></span>
+                        </td>
+                        <td><%= score.theme ? score.theme.name : '' %></td>
+                        <td><%= new Date(score.played_at).toLocaleString() %></td>
+                      </tr>
+                    <% }) %>
+                  <% } %>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Export Tab -->
+      <div class="tab-content" id="export-tab">
+        <div class="section">
+          <div class="section-header">
+            <h2 class="section-title">Exportation des Données</h2>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+            <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem;">
+              <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem;">Export Quiz</h3>
+              <p style="color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 1rem;">
+                Exporter tous les quiz au format CSV ou JSON
+              </p>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7,10 12,15 17,10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  CSV
+                </button>
+                <button class="btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7,10 12,15 17,10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  JSON
+                </button>
+              </div>
             </div>
 
-            <div
-              style="
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 1.5rem;
-              "
-            >
-              <div
-                style="
-                  border: 1px solid var(--border);
-                  border-radius: var(--radius);
-                  padding: 1.5rem;
-                "
-              >
-                <h3
-                  style="
-                    font-size: 1.125rem;
-                    font-weight: 600;
-                    margin-bottom: 0.5rem;
-                  "
-                >
-                  Export Quiz
-                </h3>
-                <p
-                  style="
-                    color: var(--muted-foreground);
-                    font-size: 0.875rem;
-                    margin-bottom: 1rem;
-                  "
-                >
-                  Exporter tous les quiz au format CSV ou JSON
-                </p>
-                <div style="display: flex; gap: 0.5rem">
-                  <button class="btn btn-primary">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7,10 12,15 17,10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                    CSV
-                  </button>
-                  <button class="btn">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7,10 12,15 17,10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                    JSON
-                  </button>
-                </div>
+            <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem;">
+              <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem;">Export Questions</h3>
+              <p style="color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 1rem;">
+                Exporter toutes les questions au format CSV ou JSON
+              </p>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7,10 12,15 17,10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  CSV
+                </button>
+                <button class="btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7,10 12,15 17,10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  JSON
+                </button>
               </div>
+            </div>
 
-              <div
-                style="
-                  border: 1px solid var(--border);
-                  border-radius: var(--radius);
-                  padding: 1.5rem;
-                "
-              >
-                <h3
-                  style="
-                    font-size: 1.125rem;
-                    font-weight: 600;
-                    margin-bottom: 0.5rem;
-                  "
-                >
-                  Export Questions
-                </h3>
-                <p
-                  style="
-                    color: var(--muted-foreground);
-                    font-size: 0.875rem;
-                    margin-bottom: 1rem;
-                  "
-                >
-                  Exporter toutes les questions au format CSV ou JSON
-                </p>
-                <div style="display: flex; gap: 0.5rem">
-                  <button class="btn btn-primary">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7,10 12,15 17,10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                    CSV
-                  </button>
-                  <button class="btn">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7,10 12,15 17,10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                    JSON
-                  </button>
-                </div>
+            <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem;">
+              <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem;">Export Utilisateurs</h3>
+              <p style="color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 1rem;">
+                Exporter tous les utilisateurs au format CSV ou JSON
+              </p>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7,10 12,15 17,10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  CSV
+                </button>
+                <button class="btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7,10 12,15 17,10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  JSON
+                </button>
               </div>
+            </div>
 
-              <div
-                style="
-                  border: 1px solid var(--border);
-                  border-radius: var(--radius);
-                  padding: 1.5rem;
-                "
-              >
-                <h3
-                  style="
-                    font-size: 1.125rem;
-                    font-weight: 600;
-                    margin-bottom: 0.5rem;
-                  "
-                >
-                  Export Utilisateurs
-                </h3>
-                <p
-                  style="
-                    color: var(--muted-foreground);
-                    font-size: 0.875rem;
-                    margin-bottom: 1rem;
-                  "
-                >
-                  Exporter tous les utilisateurs au format CSV ou JSON
-                </p>
-                <div style="display: flex; gap: 0.5rem">
-                  <button class="btn btn-primary">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7,10 12,15 17,10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                    CSV
-                  </button>
-                  <button class="btn">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7,10 12,15 17,10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                    JSON
-                  </button>
-                </div>
-              </div>
-
-              <div
-                style="
-                  border: 1px solid var(--border);
-                  border-radius: var(--radius);
-                  padding: 1.5rem;
-                "
-              >
-                <h3
-                  style="
-                    font-size: 1.125rem;
-                    font-weight: 600;
-                    margin-bottom: 0.5rem;
-                  "
-                >
+            <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem;">
+              <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem;">Export Complet</h3>
+              <p style="color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 1rem;">
+                Exporter toutes les données de la plateforme
+              </p>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-success">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7,10 12,15 17,10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
                   Export Complet
-                </h3>
-                <p
-                  style="
-                    color: var(--muted-foreground);
-                    font-size: 0.875rem;
-                    margin-bottom: 1rem;
-                  "
-                >
-                  Exporter toutes les données de la plateforme
-                </p>
-                <div style="display: flex; gap: 0.5rem">
-                  <button class="btn btn-success">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7,10 12,15 17,10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                    Export Complet
-                  </button>
-                </div>
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <!-- Quiz Modal -->
-    <!-- <div id="quizModal" class="modal-overlay hidden">
+  <!-- Quiz Modal -->
+  <!-- <div id="quizModal" class="modal-overlay hidden">
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-title" id="quizModalTitle">Nouveau Quiz</h2>
@@ -1189,67 +558,45 @@
     </div>
   </div> -->
 
-    <!-- Question Modal -->
-    <div id="questionModal" class="modal-overlay hidden">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title" id="questionModalTitle">Nouvelle Question</h2>
-        </div>
-        <form id="questionForm" action="/questions" method="POST">
-          <div class="form-group">
-            <label class="form-label">Quiz</label>
-            <select class="form-select" name="thematique_id" required>
-              <option value="">Sélectionner un quiz</option>
-              <% quizzes.forEach(theme => { %>
-              <option value="<%= theme.id %>"><%= theme.name %></option>
+  <!-- Question Modal -->
+  <div id="questionModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="questionModalTitle">Nouvelle Question</h2>
+      </div>
+      <form id="questionForm" action="/questions" method="POST">
+        <div class="form-group">
+          <label class="form-label">Quiz</label>
+          <select class="form-select" name="thematique_id" required>
+            <option value="">Sélectionner un quiz</option>
+            <% quizzes.forEach(theme=> { %>
+              <option value="<%= theme.id %>">
+                <%= theme.name %>
+              </option>
               <% }) %>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Question</label>
-            <textarea class="form-textarea" name="question" required></textarea>
-          </div>
-          <div class="form-group">
-            <label>Réponse A</label>
-            <input
-              type="text"
-              class="form-input"
-              id="optionA"
-              name="options[]"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label>Réponse B</label>
-            <input
-              type="text"
-              class="form-input"
-              id="optionB"
-              name="options[]"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label>Réponse C</label>
-            <input
-              type="text"
-              class="form-input"
-              id="optionC"
-              name="options[]"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label>Réponse D</label>
-            <input
-              type="text"
-              class="form-input"
-              id="optionD"
-              name="options[]"
-              required
-            />
-          </div>
-          <!-- <div class="form-group">
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Question</label>
+          <textarea class="form-textarea" name="question" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Réponse A</label>
+          <input type="text" class="form-input" id="optionA" name="options[]" required>
+        </div>
+        <div class="form-group">
+          <label>Réponse B</label>
+          <input type="text" class="form-input" id="optionB" name="options[]" required>
+        </div>
+        <div class="form-group">
+          <label>Réponse C</label>
+          <input type="text" class="form-input" id="optionC" name="options[]" required>
+        </div>
+        <div class="form-group">
+          <label>Réponse D</label>
+          <input type="text" class="form-input" id="optionD" name="options[]" required>
+        </div>
+        <!-- <div class="form-group">
           <label class="form-label">Bonne Réponse</label>
           <select class="form-select" name="correctAnswer" required>
             <option value="">Sélectionner la bonne réponse</option>
@@ -1260,440 +607,393 @@
           </select>
         </div> -->
 
-          <div class="form-group">
-            <label>Bonne Réponse</label>
-            <select
-              class="form-select"
-              id="correctAnswer"
-              name="correct_answers[]"
-              required
-            >
-              <option value="">Sélectionner la bonne réponse</option>
-            </select>
-          </div>
-          <div class="modal-actions">
-            <button type="button" class="btn" onclick="closeQuestionModal()">
-              Annuler
-            </button>
-            <button type="submit" class="btn btn-primary">Enregistrer</button>
-          </div>
-        </form>
-      </div>
-    </div>
 
-    <!-- Theme Modal -->
-    <div id="themeModal" class="modal-overlay hidden">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title" id="themeModalTitle">Nouveau Thème</h2>
+
+        <div class="form-group">
+          <label>Bonne Réponse</label>
+          <select class="form-select" id="correctAnswer" name="correct_answers[]" required>
+            <option value="">Sélectionner la bonne réponse</option>
+          </select>
         </div>
-        <form id="themeForm">
-          <div class="form-group">
-            <label class="form-label">Nom du Thème</label>
-            <input type="text" class="form-input" name="name" required />
-          </div>
-          <div class="modal-actions">
-            <button type="button" class="btn" onclick="closeThemeModal()">
-              Annuler
-            </button>
-            <button type="submit" class="btn btn-primary">Enregistrer</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- User Modal -->
-    <div id="userModal" class="modal-overlay hidden">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title" id="userModalTitle">Nouvel Utilisateur</h2>
+        <div class="modal-actions">
+          <button type="button" class="btn" onclick="closeQuestionModal()">Annuler</button>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
         </div>
-        <form id="userForm">
-          <div class="form-group">
-            <label class="form-label">Nom Complet</label>
-            <input type="text" class="form-input" name="name" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-input" name="email" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Mot de Passe</label>
-            <input
-              type="password"
-              class="form-input"
-              name="password"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Rôle</label>
-            <select class="form-select" name="role" required>
-              <option value="user">Utilisateur</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-          <div class="modal-actions">
-            <button type="button" class="btn" onclick="closeUserModal()">
-              Annuler
-            </button>
-            <button type="submit" class="btn btn-primary">Enregistrer</button>
-          </div>
-        </form>
-      </div>
+      </form>
     </div>
+  </div>
 
-    <script>
-      // Tab switching
-      const tabButtons = document.querySelectorAll(".tab-button");
-      const tabContents = document.querySelectorAll(".tab-content");
+  <!-- Theme Modal -->
+  <div id="themeModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="themeModalTitle">Nouveau Thème</h2>
+      </div>
+      <form id="themeForm">
+        <div class="form-group">
+          <label class="form-label">Nom du Thème</label>
+          <input type="text" class="form-input" name="name" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn" onclick="closeThemeModal()">Annuler</button>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-      tabButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          const tabName = button.dataset.tab;
+  <!-- User Modal -->
+  <div id="userModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="userModalTitle">Nouvel Utilisateur</h2>
+      </div>
+      <form id="userForm">
+        <div class="form-group">
+          <label class="form-label">Nom Complet</label>
+          <input type="text" class="form-input" name="name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" name="email" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mot de Passe</label>
+          <input type="password" class="form-input" name="password" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Rôle</label>
+          <select class="form-select" name="role" required>
+            <option value="user">Utilisateur</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn" onclick="closeUserModal()">Annuler</button>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-          tabButtons.forEach((btn) => btn.classList.remove("active"));
-          tabContents.forEach((content) => content.classList.remove("active"));
+  <script>
+    // Tab switching
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
 
-          button.classList.add("active");
-          document.getElementById(`${tabName}-tab`).classList.add("active");
-        });
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const tabName = button.dataset.tab;
+
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+
+        button.classList.add('active');
+        document.getElementById(`${tabName}-tab`).classList.add('active');
       });
+    });
 
-      // Quiz Modal Functions
-      // function openQuizModal(id = null) {
-      //   document.getElementById('quizModal').classList.remove('hidden');
-      //   if (id) {
-      //     document.getElementById('quizModalTitle').textContent = 'Modifier le Quiz';
-      //     // Load quiz data here
-      //   } else {
-      //     document.getElementById('quizModalTitle').textContent = 'Nouveau Quiz';
-      //     document.getElementById('quizForm').reset();
-      //   }
-      // }
+    // Quiz Modal Functions
+    // function openQuizModal(id = null) {
+    //   document.getElementById('quizModal').classList.remove('hidden');
+    //   if (id) {
+    //     document.getElementById('quizModalTitle').textContent = 'Modifier le Quiz';
+    //     // Load quiz data here
+    //   } else {
+    //     document.getElementById('quizModalTitle').textContent = 'Nouveau Quiz';
+    //     document.getElementById('quizForm').reset();
+    //   }
+    // }
 
-      function closeQuizModal() {
-        document.getElementById("quizModal").classList.add("hidden");
+    function closeQuizModal() {
+      document.getElementById('quizModal').classList.add('hidden');
+    }
+
+    function editQuiz(id) {
+      openQuizModal(id);
+    }
+
+    function deleteQuiz(id) {
+      if (confirm('Êtes-vous sûr de vouloir supprimer ce quiz ?')) {
+        console.log('Deleting quiz:', id);
+        alert('Quiz supprimé avec succès !');
       }
+    }
 
-      function editQuiz(id) {
-        openQuizModal(id);
-      }
+    // Question Modal Functions
+    function openQuestionModal(id = null) {
+      document.getElementById('questionModal').classList.remove('hidden');
+      document.getElementById('questionModalTitle').textContent = 'Nouvelle Question';
+      const form = document.getElementById('questionForm');
+      form.reset();
+      form.action = '/questions';
+      form.dataset.method = 'POST';
+      updateCorrectOptions();
+    }
 
-      function deleteQuiz(id) {
-        if (confirm("Êtes-vous sûr de vouloir supprimer ce quiz ?")) {
-          console.log("Deleting quiz:", id);
-          alert("Quiz supprimé avec succès !");
-        }
-      }
+    function closeQuestionModal() {
+      document.getElementById('questionModal').classList.add('hidden');
+    }
 
-      // Question Modal Functions
-      function openQuestionModal(id = null) {
-        document.getElementById("questionModal").classList.remove("hidden");
-        document.getElementById("questionModalTitle").textContent =
-          "Nouvelle Question";
-        const form = document.getElementById("questionForm");
-        form.reset();
-        form.action = "/questions";
-        form.dataset.method = "POST";
-        updateCorrectOptions();
-      }
+    // Open modal for editing question
+    async function editQuestion(id) {
+      try {
+        const response = await fetch(`/questions/${id}`);
+        if (!response.ok) throw new Error('Failed to fetch question');
+        const question = await response.json();
 
-      function closeQuestionModal() {
-        document.getElementById("questionModal").classList.add("hidden");
-      }
+        // Parse options/correct_answers if needed
+        const options = typeof question.options === 'string' ? JSON.parse(question.options) : question.options;
+        const correctAnswers = typeof question.correct_answers === 'string' ? JSON.parse(question.correct_answers) : question.correct_answers;
 
-      // Open modal for editing question
-      async function editQuestion(id) {
-        try {
-          const response = await fetch(`/questions/${id}`);
-          if (!response.ok) throw new Error("Failed to fetch question");
-          const question = await response.json();
+        // Open modal and populate fields
+        document.getElementById('questionModal').classList.remove('hidden');
+        document.getElementById('questionModalTitle').textContent = 'Modifier la Question';
+        const form = document.getElementById('questionForm');
+        form.action = `/questions/${id}`;
+        form.dataset.method = 'PUT';
 
-          // Parse options/correct_answers if needed
-          const options =
-            typeof question.options === "string"
-              ? JSON.parse(question.options)
-              : question.options;
-          const correctAnswers =
-            typeof question.correct_answers === "string"
-              ? JSON.parse(question.correct_answers)
-              : question.correct_answers;
-
-          // Open modal and populate fields
-          document.getElementById("questionModal").classList.remove("hidden");
-          document.getElementById("questionModalTitle").textContent =
-            "Modifier la Question";
-          const form = document.getElementById("questionForm");
-          form.action = `/questions/${id}`;
-          form.dataset.method = "PUT";
-
-          document.querySelector('[name="thematique_id"]').value =
-            question.thematique_id;
-          document.querySelector('[name="question"]').value = question.question;
-          if (options && options.length >= 4) {
-            document.getElementById("optionA").value = options[0];
-            document.getElementById("optionB").value = options[1];
-            document.getElementById("optionC").value = options[2];
-            document.getElementById("optionD").value = options[3];
-            updateCorrectOptions();
-            if (correctAnswers && correctAnswers.length > 0) {
-              document.getElementById("correctAnswer").value =
-                correctAnswers[0];
-            }
+        document.querySelector('[name="thematique_id"]').value = question.thematique_id;
+        document.querySelector('[name="question"]').value = question.question;
+        if (options && options.length >= 4) {
+          document.getElementById('optionA').value = options[0];
+          document.getElementById('optionB').value = options[1];
+          document.getElementById('optionC').value = options[2];
+          document.getElementById('optionD').value = options[3];
+          updateCorrectOptions();
+          if (correctAnswers && correctAnswers.length > 0) {
+            document.getElementById('correctAnswer').value = correctAnswers[0];
           }
-        } catch (error) {
-          alert("Erreur lors du chargement de la question");
         }
+      } catch (error) {
+        alert('Erreur lors du chargement de la question');
       }
+    }
 
-      // Handle form submission for both add and edit
-      document
-        .getElementById("questionForm")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const form = e.target;
-          const formData = new FormData(form);
-          const data = {
-            thematique_id: parseInt(formData.get("thematique_id")),
-            question: formData.get("question"),
-            options: formData.getAll("options[]"),
-            correct_answers: formData.getAll("correct_answers[]"),
-          };
+    // Handle form submission for both add and edit
+    document.getElementById('questionForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const data = {
+        thematique_id: parseInt(formData.get('thematique_id')),
+        question: formData.get('question'),
+        options: formData.getAll('options[]'),
+        correct_answers: formData.getAll('correct_answers[]')
+      };
 
-          const method = form.dataset.method || "POST";
-          const url = form.action;
+      const method = form.dataset.method || 'POST';
+      const url = form.action;
 
-          try {
-            const response = await fetch(url, {
-              method: method === "PUT" ? "PUT" : "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(data),
-            });
+      try {
+        const response = await fetch(url, {
+          method: method === 'PUT' ? 'PUT' : 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (response.ok) {
+          // alert('Question enregistrée avec succès !');
+          closeQuestionModal();
+          // location.reload();
+          // let questiontab = document.querySelector('[data-tab="questions"]');
+          // questiontab.click();
+
+          sessionStorage.setItem('activeTab', 'questions');
+          location.reload();
+        }
+        else {
+          const error = await response.json();
+          console.log('Erreur: ' + (error.message || 'Impossible d\'enregistrer la question'));
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        // alert('Erreur lors de la soumission du formulaire');
+      }
+    });
+
+    // Theme Modal Functions
+    function openThemeModal(id = null) {
+      document.getElementById('themeModal').classList.remove('hidden');
+      if (id) {
+        document.getElementById('themeModalTitle').textContent = 'Modifier le Thème';
+      } else {
+        document.getElementById('themeModalTitle').textContent = 'Nouveau Thème';
+        document.getElementById('themeForm').reset();
+      }
+    }
+
+    function closeThemeModal() {
+      document.getElementById('themeModal').classList.add('hidden');
+    }
+
+    function editTheme(id) {
+      openThemeModal(id);
+    }
+
+    function deleteTheme(id) {
+      if (confirm('Êtes-vous sûr de vouloir supprimer ce thème ?')) {
+        console.log('Deleting theme:', id);
+        alert('Thème supprimé avec succès !');
+      }
+    }
+
+    // User Modal Functions
+    function openUserModal(id = null) {
+      document.getElementById('userModal').classList.remove('hidden');
+      if (id) {
+        document.getElementById('userModalTitle').textContent = 'Modifier l\'Utilisateur';
+      } else {
+        document.getElementById('userModalTitle').textContent = 'Nouvel Utilisateur';
+        document.getElementById('userForm').reset();
+      }
+    }
+
+    function closeUserModal() {
+      document.getElementById('userModal').classList.add('hidden');
+    }
+
+    function editUser(id) {
+      openUserModal(id);
+    }
+
+    function deleteUser(id) {
+      if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
+        console.log('Deleting user:', id);
+        alert('Utilisateur supprimé avec succès !');
+      }
+    }
+
+
+    document.getElementById('themeForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      console.log('Theme data:', Object.fromEntries(formData));
+      alert('Thème enregistré avec succès !');
+      closeThemeModal();
+    });
+
+    document.getElementById('userForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      console.log('User data:', Object.fromEntries(formData));
+      alert('Utilisateur enregistré avec succès !');
+      closeUserModal();
+    });
+
+
+    // Close modals on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.add('hidden');
+        }
+      });
+    });
+
+    // Search functionality
+    document.getElementById('quizSearch')?.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      const rows = document.querySelectorAll('#quizzesTable tbody tr');
+
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(searchTerm) ? '' : 'none';
+      });
+    });
+
+
+
+
+    const optionInputs = ["A", "B", "C", "D"];
+    const correctSelect = document.getElementById("correctAnswer");
+
+    function updateCorrectOptions() {
+      correctSelect.innerHTML = '<option value="">Sélectionner la bonne réponse</option>';
+      optionInputs.forEach(letter => {
+        const input = document.getElementById("option" + letter);
+        if (input && input.value.trim() !== "") {
+          const opt = document.createElement("option");
+          opt.value = input.value;
+          opt.textContent = `${letter}: ${input.value}`;
+          correctSelect.appendChild(opt);
+        }
+      });
+    }
+
+    // Update dropdown when user types in any option field
+    optionInputs.forEach(letter => {
+      document.getElementById("option" + letter).addEventListener("input", updateCorrectOptions);
+    });
+
+    // Handle form submission
+    document.getElementById('questionForm').addEventListener('submit', async (e) => {
+      e.preventDefault(); // Prevent default form submission
+
+      const formData = new FormData(e.target);
+      const data = {
+        thematique_id: parseInt(formData.get('thematique_id')),
+        question: formData.get('question'),
+        options: formData.getAll('options[]'),
+        correct_answers: formData.getAll('correct_answers[]')
+      };
+
+      console.log('Form data being submitted:', JSON.stringify(data, null, 2));
+
+      try {
+        const response = await fetch('/questions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          console.log('Question successfully saved');
+          closeQuestionModal();
+          sessionStorage.setItem('activeTab', 'questions');
+          location.reload(); // Refresh to show new question
+        } else {
+          const error = await response.json();
+          alert('Erreur: ' + (error.message || 'Impossible d\'enregistrer la question'));
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    });
+
+
+    function deleteQuestion(id) {
+      if (confirm('Êtes-vous sûr de vouloir supprimer cette question ?')) {
+        fetch(`/questions/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => {
             if (response.ok) {
-              // alert('Question enregistrée avec succès !');
-              closeQuestionModal();
-              // location.reload();
-              // let questiontab = document.querySelector('[data-tab="questions"]');
-              // questiontab.click();
-
-              sessionStorage.setItem("activeTab", "questions");
+              sessionStorage.setItem('activeTab', 'questions');
               location.reload();
             } else {
-              const error = await response.json();
-              console.log(
-                "Erreur: " +
-                  (error.message || "Impossible d'enregistrer la question")
-              );
+              alert('Erreur lors de la suppression de la question.');
             }
-          } catch (error) {
-            console.error("Error submitting form:", error);
-            // alert('Erreur lors de la soumission du formulaire');
-          }
-        });
-
-      // Theme Modal Functions
-      function openThemeModal(id = null) {
-        document.getElementById("themeModal").classList.remove("hidden");
-        if (id) {
-          document.getElementById("themeModalTitle").textContent =
-            "Modifier le Thème";
-        } else {
-          document.getElementById("themeModalTitle").textContent =
-            "Nouveau Thème";
-          document.getElementById("themeForm").reset();
-        }
-      }
-
-      function closeThemeModal() {
-        document.getElementById("themeModal").classList.add("hidden");
-      }
-
-      function editTheme(id) {
-        openThemeModal(id);
-      }
-
-      function deleteTheme(id) {
-        if (confirm("Êtes-vous sûr de vouloir supprimer ce thème ?")) {
-          console.log("Deleting theme:", id);
-          alert("Thème supprimé avec succès !");
-        }
-      }
-
-      // User Modal Functions
-      function openUserModal(id = null) {
-        document.getElementById("userModal").classList.remove("hidden");
-        if (id) {
-          document.getElementById("userModalTitle").textContent =
-            "Modifier l'Utilisateur";
-        } else {
-          document.getElementById("userModalTitle").textContent =
-            "Nouvel Utilisateur";
-          document.getElementById("userForm").reset();
-        }
-      }
-
-      function closeUserModal() {
-        document.getElementById("userModal").classList.add("hidden");
-      }
-
-      function editUser(id) {
-        openUserModal(id);
-      }
-
-      function deleteUser(id) {
-        if (confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
-          console.log("Deleting user:", id);
-          alert("Utilisateur supprimé avec succès !");
-        }
-      }
-
-      // Form Submissions
-      // document.getElementById('quizForm').addEventListener('submit', (e) => {
-      //   e.preventDefault();
-      //   const formData = new FormData(e.target);
-      //   console.log('Quiz data:', Object.fromEntries(formData));
-      //   alert('Quiz enregistré avec succès !');
-      //   closeQuizModal();
-      // });
-
-      document.getElementById("themeForm").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        console.log("Theme data:", Object.fromEntries(formData));
-        alert("Thème enregistré avec succès !");
-        closeThemeModal();
-      });
-
-      document.getElementById("userForm").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        console.log("User data:", Object.fromEntries(formData));
-        alert("Utilisateur enregistré avec succès !");
-        closeUserModal();
-      });
-
-      // Close modals on overlay click
-      document.querySelectorAll(".modal-overlay").forEach((modal) => {
-        modal.addEventListener("click", (e) => {
-          if (e.target === modal) {
-            modal.classList.add("hidden");
-          }
-        });
-      });
-
-      // Search functionality
-      document.getElementById("quizSearch")?.addEventListener("input", (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        const rows = document.querySelectorAll("#quizzesTable tbody tr");
-
-        rows.forEach((row) => {
-          const text = row.textContent.toLowerCase();
-          row.style.display = text.includes(searchTerm) ? "" : "none";
-        });
-      });
-
-      const optionInputs = ["A", "B", "C", "D"];
-      const correctSelect = document.getElementById("correctAnswer");
-
-      function updateCorrectOptions() {
-        correctSelect.innerHTML =
-          '<option value="">Sélectionner la bonne réponse</option>';
-        optionInputs.forEach((letter) => {
-          const input = document.getElementById("option" + letter);
-          if (input && input.value.trim() !== "") {
-            const opt = document.createElement("option");
-            opt.value = input.value;
-            opt.textContent = `${letter}: ${input.value}`;
-            correctSelect.appendChild(opt);
-          }
-        });
-      }
-
-      // Update dropdown when user types in any option field
-      optionInputs.forEach((letter) => {
-        document
-          .getElementById("option" + letter)
-          .addEventListener("input", updateCorrectOptions);
-      });
-
-      // Handle form submission
-      document
-        .getElementById("questionForm")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault(); // Prevent default form submission
-
-          const formData = new FormData(e.target);
-          const data = {
-            thematique_id: parseInt(formData.get("thematique_id")),
-            question: formData.get("question"),
-            options: formData.getAll("options[]"),
-            correct_answers: formData.getAll("correct_answers[]"),
-          };
-
-          console.log(
-            "Form data being submitted:",
-            JSON.stringify(data, null, 2)
-          );
-
-          try {
-            const response = await fetch("/questions", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(data),
-            });
-
-            if (response.ok) {
-              console.log("Question successfully saved");
-              closeQuestionModal();
-              sessionStorage.setItem("activeTab", "questions");
-              location.reload(); // Refresh to show new question
-            } else {
-              const error = await response.json();
-              alert(
-                "Erreur: " +
-                  (error.message || "Impossible d'enregistrer la question")
-              );
-            }
-          } catch (error) {
-            console.error("Error:", error);
-          }
-        });
-
-      function deleteQuestion(id) {
-        if (confirm("Êtes-vous sûr de vouloir supprimer cette question ?")) {
-          fetch(`/questions/${id}`, {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
           })
-            .then((response) => {
-              if (response.ok) {
-                sessionStorage.setItem("activeTab", "questions");
-                location.reload();
-              } else {
-                alert("Erreur lors de la suppression de la question.");
-              }
-            })
-            .catch(() => {
-              alert("Erreur réseau lors de la suppression.");
-            });
-        }
+          .catch(() => {
+            alert('Erreur réseau lors de la suppression.');
+          });
       }
+    };
 
-      document.addEventListener("DOMContentLoaded", () => {
-        const activeTab = sessionStorage.getItem("activeTab");
-        if (activeTab) {
-          const tabBtn = document.querySelector(
-            `.tab-button[data-tab="${activeTab}"]`
-          );
-          if (tabBtn) tabBtn.click();
-          sessionStorage.removeItem("activeTab");
-        }
-      });
-    </script>
-  </body>
+    document.addEventListener('DOMContentLoaded', () => {
+      const activeTab = sessionStorage.getItem('activeTab');
+      if (activeTab) {
+        const tabBtn = document.querySelector(`.tab-button[data-tab="${activeTab}"]`);
+        if (tabBtn) tabBtn.click();
+        sessionStorage.removeItem('activeTab');
+      }
+    });
+  </script>
+</body>
+
 </html>
