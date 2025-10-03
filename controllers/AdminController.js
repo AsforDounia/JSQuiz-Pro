@@ -38,7 +38,13 @@ module.exports = {
                 ]
             });
 
-            res.render('admin/dashboard', { quizzes: themes , users : users});
+            
+            res.render('admin/dashboard', { 
+                quizzes: themes , 
+                users : users,
+                user: req.user,
+                layout: 'layouts/main',
+            });
         } catch (error) {
             res.status(500).send('Error loading quizzes');
         }

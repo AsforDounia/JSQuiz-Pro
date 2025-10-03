@@ -7,6 +7,8 @@ const themesRoutes = require("./routes/themes");
 const questionsRoutes = require("./routes/questions");
 const quizRoutes = require("./routes/quiz");
 const cookieParser = require('cookie-parser'); // Parse cookies for reading JWT from cookie
+const expressLayouts = require('express-ejs-layouts');
+const jwt = require('jsonwebtoken'); // Add this at the top
 
 require("dotenv").config();
 const path = require('path'); 
@@ -16,9 +18,11 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
+app.use(expressLayouts);
 
 // config pour EJS
 app.set('view engine', 'ejs');
+app.set('layout', 'layouts/main'); // default layout file
 app.set('views', path.join(__dirname, 'views'));
 
 // pour lire formulaires
@@ -30,6 +34,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Parse cookies for reading JWT from cookie
 app.use(cookieParser());
 
+// JWT middleware: set req.user from JWT cookie
+app.use((req, res, next) => {
+  const token = req.cookies.token;
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = decoded;
+      res.locals.user = decoded;
+    } catch (err) {
+      req.user = null;
+      res.locals.user = null;
+    }
+  } else {
+    req.user = null;
+    res.locals.user = null;
+  }
+  next();
+});
+
 // Routes
 app.use("/users", userRoutes);
 app.use("/admin", adminRoutes);
@@ -39,13 +62,16 @@ app.use("/questions", questionsRoutes);
 app.use("/quiz", quizRoutes);
 
 
-app.get('/index', (req, res) => {
-    res.render('index'); 
-});
+
 
 // Test root
 app.get("/", (req, res) => {
-    res.render("index");
+    console.log(req.user);
+    res.render("index",{
+        user: req.user,
+        layout: 'layouts/main',
+        isIndex: true
+    });
 });
 
 

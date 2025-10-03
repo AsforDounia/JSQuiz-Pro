@@ -5,14 +5,22 @@ const AuthController = require('../controllers/AuthController');
 
 // Register
 router.get('/register', (req, res) => {
-  res.render('auth/register');
+  res.render('auth/register', { 
+    user: req.user,
+    layout: 'layouts/auth',
+    isRegister: true
+  });
 });
 
 router.post('/register', AuthController.register);
 
 // Login Form
 router.get('/login', (req, res) => {
-  res.render('auth/login');
+  res.render('auth/login', { 
+    user: req.user,
+    layout: 'layouts/auth',
+    isRegister: false
+});
 });
 // Login
 router.post('/login', AuthController.login);
