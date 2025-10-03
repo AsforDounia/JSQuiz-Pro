@@ -1108,75 +1108,93 @@
     // Question Modal Functions
     function openQuestionModal(id = null) {
       document.getElementById('questionModal').classList.remove('hidden');
-      if (id) {
-        document.getElementById('questionModalTitle').textContent = 'Modifier la Question';
-      } else {
-        document.getElementById('questionModalTitle').textContent = 'Nouvelle Question';
-        document.getElementById('questionForm').reset();
-      }
+      document.getElementById('questionModalTitle').textContent = 'Nouvelle Question';
+      const form = document.getElementById('questionForm');
+      form.reset();
+      form.action = '/questions';
+      form.dataset.method = 'POST';
+      updateCorrectOptions();
     }
 
     function closeQuestionModal() {
       document.getElementById('questionModal').classList.add('hidden');
     }
 
-    // function editQuestion(id) {
-    //   openQuestionModal(id);
-    // }
-async function editQuestion(id) {
+    // Open modal for editing question
+    async function editQuestion(id) {
       try {
         const response = await fetch(`/questions/${id}`);
         if (!response.ok) throw new Error('Failed to fetch question');
-        
         const question = await response.json();
-        
-        // Parse JSON strings if needed
-        const options = typeof question.options === 'string' 
-          ? JSON.parse(question.options) 
-          : question.options;
-        const correctAnswers = typeof question.correct_answers === 'string' 
-          ? JSON.parse(question.correct_answers) 
-          : question.correct_answers;
-        
+
+        // Parse options/correct_answers if needed
+        const options = typeof question.options === 'string' ? JSON.parse(question.options) : question.options;
+        const correctAnswers = typeof question.correct_answers === 'string' ? JSON.parse(question.correct_answers) : question.correct_answers;
+
         // Open modal and populate fields
         document.getElementById('questionModal').classList.remove('hidden');
         document.getElementById('questionModalTitle').textContent = 'Modifier la Question';
-        
-        // Set form action for update
         const form = document.getElementById('questionForm');
         form.action = `/questions/${id}`;
         form.dataset.method = 'PUT';
-        
-        // Populate fields
+
         document.querySelector('[name="thematique_id"]').value = question.thematique_id;
         document.querySelector('[name="question"]').value = question.question;
-        
-        // Populate options
         if (options && options.length >= 4) {
           document.getElementById('optionA').value = options[0];
           document.getElementById('optionB').value = options[1];
           document.getElementById('optionC').value = options[2];
           document.getElementById('optionD').value = options[3];
-          
-          // Update correct answer dropdown
           updateCorrectOptions();
-          
-          // Set correct answer
           if (correctAnswers && correctAnswers.length > 0) {
             document.getElementById('correctAnswer').value = correctAnswers[0];
           }
         }
       } catch (error) {
-        console.error('Error loading question:', error);
         alert('Erreur lors du chargement de la question');
       }
     }
-    function deleteQuestion(id) {
-      if (confirm('Êtes-vous sûr de vouloir supprimer cette question ?')) {
-        console.log('Deleting question:', id);
-        alert('Question supprimée avec succès !');
+
+    // Handle form submission for both add and edit
+    document.getElementById('questionForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const data = {
+        thematique_id: parseInt(formData.get('thematique_id')),
+        question: formData.get('question'),
+        options: formData.getAll('options[]'),
+        correct_answers: formData.getAll('correct_answers[]')
+      };
+
+      const method = form.dataset.method || 'POST';
+      const url = form.action;
+
+      try {
+        const response = await fetch(url, {
+          method: method === 'PUT' ? 'PUT' : 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (response.ok) {
+          // alert('Question enregistrée avec succès !');
+          closeQuestionModal();
+          // location.reload();
+          // let questiontab = document.querySelector('[data-tab="questions"]');
+          // questiontab.click();
+
+          sessionStorage.setItem('activeTab', 'questions');
+          location.reload();
+        } 
+        else {
+          const error = await response.json();
+          console.log('Erreur: ' + (error.message || 'Impossible d\'enregistrer la question'));
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        // alert('Erreur lors de la soumission du formulaire');
       }
-    }
+    });
 
     // Theme Modal Functions
     function openThemeModal(id = null) {
@@ -1326,8 +1344,9 @@ const optionInputs = ["A", "B", "C", "D"];
       });
       
       if (response.ok) {
-        alert('Question enregistrée avec succès !');
+        console.log('Question successfully saved');
         closeQuestionModal();
+        sessionStorage.setItem('activeTab', 'questions');
         location.reload(); // Refresh to show new question
       } else {
         const error = await response.json();
@@ -1335,9 +1354,18 @@ const optionInputs = ["A", "B", "C", "D"];
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Erreur de connexion au serveur');
     }
   });
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+  const activeTab = sessionStorage.getItem('activeTab');
+  if (activeTab) {
+    const tabBtn = document.querySelector(`.tab-button[data-tab="${activeTab}"]`);
+    if (tabBtn) tabBtn.click();
+    sessionStorage.removeItem('activeTab');
+  }
+});
   </script>
 </body>
 </html>
