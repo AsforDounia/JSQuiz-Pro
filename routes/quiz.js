@@ -8,6 +8,9 @@ router.get('/list', authenticateToken, QuizController.getQuizList);
 router.get('/start/:quizType', authenticateToken, QuizController.startQuiz);
 
 
+// Get all quizzes
+router.get('/', QuizController.getAllQuizzes);
+
 // Get a quiz by theme
 router.get('/theme/:themeId', QuizController.getQuizByTheme);
 

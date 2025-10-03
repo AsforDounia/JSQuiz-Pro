@@ -29,7 +29,7 @@ module.exports = {
             const token = jwt.sign(
                 { id: user.id, role: user.role, name: user.username },
                 process.env.JWT_SECRET,
-                { expiresIn: '1h' }
+                { expiresIn: '24h' }
             );
 
             // Set token in HTTP-only cookie
@@ -39,7 +39,11 @@ module.exports = {
                 maxAge: 3600000 // 1 hour
             });
 
-            return res.redirect('/users/dashboard');
+            if (role === 'admin') {
+                return res.redirect('/admin/dashboard');
+            } else {
+                return res.redirect('/users/dashboard');
+            }
             // return res.status(201).json({ 
             //     token, 
             //     message: 'User created successfully' 
@@ -65,7 +69,7 @@ module.exports = {
             const token = jwt.sign(
                 { id: user.id, role: user.role, name: user.username },
                 process.env.JWT_SECRET,
-                { expiresIn: '1h' }
+                { expiresIn: '24h' }
             );
 
             // Set token in HTTP-only cookie
