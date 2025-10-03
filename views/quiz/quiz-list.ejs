@@ -1,51 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz List - JSQuiz Pro</title>
-    <meta
-      name="description"
-      content="Choisissez votre défi et testez vos compétences en développement web"
-    />
-    <link rel="stylesheet" href="/css/style.css" />
 
-  </head>
-  <body>
-    <!-- Header -->
-    <header class="site-header">
-      <div class="container">
-        <div class="header-content">
-          <div class="logo-section">
-            <div class="logo-icon">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"
-                />
-                <polyline points="9,11 9,9 15,9 15,11" />
-                <polyline points="9,9 9,4 15,4 15,9" />
-              </svg>
-            </div>
-            <span class="logo-text">JSQuiz Pro</span>
-          </div>
-          <div class="header-actions">
-            <a href="/users/dashboard" class="btn">Dashboard</a>
-            <form action="/auth/logout" method="POST" style="display: inline">
-              <button type="submit" class="btn">Déconnexion</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </header>
 
     <!-- Quiz Selection -->
     <section class="quiz-section">
@@ -123,5 +76,3 @@
         window.location.href = `/quiz/start/${quizType}`;
       }
     </script>
-  </body>
-</html>
