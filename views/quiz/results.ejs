@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Résultats du Quiz - JSQuiz Pro</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo-section">
+            <div class="logo-icon">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"
+                />
+                <polyline points="9,11 9,9 15,9 15,11" />
+                <polyline points="9,9 9,4 15,4 15,9" />
+              </svg>
+            </div>
+            <span class="logo-text">JSQuiz Pro</span>
+          </div>
+          <div class="header-actions">
+            <a href="/users/dashboard" class="btn">Dashboard</a>
+            <a href="/quiz/list" class="btn">Autres Quiz</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Results Section -->
+    <main class="quiz-results-main">
+      <div class="container">
+        <div class="results-header">
+          <h1 class="results-title">Résultats du Quiz <%= theme.name %></h1>
+          <div class="score-display">
+            <div class="score-circle">
+              <span class="score-percentage"><%= percentage %>%</span>
+            </div>
+            <div class="score-details">
+              <p class="score-text">
+                Vous avez obtenu <strong><%= score %></strong> sur
+                <strong><%= totalQuestions %></strong> questions
+              </p>
+              <% if (percentage >= 80) { %>
+              <p class="score-message success">🎉 Excellent travail !</p>
+              <% } else if (percentage >= 60) { %>
+              <p class="score-message good">👍 Bon travail !</p>
+              <% } else { %>
+              <p class="score-message needs-improvement">
+                📚 Continuez à vous entraîner !
+              </p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed Results -->
+        <div class="results-details">
+          <h2 class="section-title">Détail des réponses</h2>
+          <div class="questions-results">
+            <% results.forEach((result, index) => { %>
+            <div
+              class="question-result <%= result.isCorrect ? 'correct' : 'incorrect' %>"
+            >
+              <div class="question-number">Question <%= index + 1 %></div>
+              <div class="question-text"><%= result.question %></div>
+              <div class="answer-details">
+                <div class="user-answer">
+                  <strong>Votre réponse:</strong> <%= result.userAnswer %>
+                  <span class="answer-status">
+                    <% if (result.isCorrect) { %> ✅ Correct <% } else { %> ❌
+                    Incorrect <% } %>
+                  </span>
+                </div>
+                <% if (!result.isCorrect) { %>
+                <div class="correct-answer">
+                  <strong>Bonne réponse:</strong> <%=
+                  result.correctAnswer.join(', ') %>
+                </div>
+                <% } %>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="results-actions">
+          <a href="/quiz/start/<%= quizType %>" class="btn btn-primary"
+            >Refaire ce quiz</a
+          >
+          <a href="/quiz/list" class="btn btn-secondary"
+            >Choisir un autre quiz</a
+          >
+          <a href="/users/dashboard" class="btn">Retour au dashboard</a>
+        </div>
+      </div>
+    </main>
+
+    <style>
+      .quiz-results-main {
+        padding: 2rem 0;
+        min-height: calc(100vh - 80px);
+      }
+
+      .results-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .results-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        color: var(--foreground);
+      }
+
+      .score-display {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .score-circle {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+      }
+
+      .score-details {
+        text-align: left;
+      }
+
+      .score-text {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .score-message {
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .score-message.success {
+        color: var(--success);
+      }
+      .score-message.good {
+        color: var(--warning);
+      }
+      .score-message.needs-improvement {
+        color: var(--destructive);
+      }
+
+      .results-details {
+        margin-bottom: 3rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .question-result {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        background: var(--card);
+      }
+
+      .question-result.correct {
+        border-color: var(--success);
+        background: rgba(16, 185, 129, 0.05);
+      }
+
+      .question-result.incorrect {
+        border-color: var(--destructive);
+        background: rgba(239, 68, 68, 0.05);
+      }
+
+      .question-number {
+        font-weight: 600;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .question-text {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+      }
+
+      .answer-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .user-answer,
+      .correct-answer {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .answer-status {
+        margin-left: auto;
+        font-weight: 600;
+      }
+
+      .results-actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 768px) {
+        .score-display {
+          flex-direction: column;
+        }
+
+        .score-details {
+          text-align: center;
+        }
+
+        .results-actions {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .results-actions .btn {
+          width: 100%;
+          max-width: 300px;
+        }
+      }
+    </style>
+  </body>
+</html>

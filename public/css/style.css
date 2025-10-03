@@ -2258,6 +2258,127 @@ body {
   }
 }
 
+.no-quiz-container {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     min-height: 400px;
+     grid-column: 1 / -1;
+   }
+
+   .no-quiz-content {
+     text-align: center;
+     max-width: 500px;
+     padding: 2rem;
+   }
+
+   .no-quiz-icon {
+     margin-bottom: 1.5rem;
+     color: #64748b;
+     display: flex;
+     justify-content: center;
+   }
+
+   .no-quiz-title {
+     font-size: 1.5rem;
+     font-weight: 600;
+     color: #1e293b;
+     margin-bottom: 1rem;
+     margin-top: 0;
+   }
+
+   .no-quiz-description {
+     color: #64748b;
+     font-size: 1rem;
+     line-height: 1.6;
+     margin-bottom: 2rem;
+     margin-top: 0;
+   }
+
+   .no-quiz-actions {
+     display: flex;
+     justify-content: center;
+   }
+
+   .no-quiz-actions .btn {
+     display: inline-flex;
+     align-items: center;
+     gap: 0.5rem;
+     padding: 0.75rem 1.5rem;
+     font-size: 0.9rem;
+     font-weight: 500;
+     text-decoration: none;
+     border-radius: 8px;
+     border: none;
+     cursor: pointer;
+     transition: all 0.2s ease;
+   }
+
+   .no-quiz-actions .btn-primary {
+     background-color: #3b82f6;
+     color: white;
+   }
+
+   .no-quiz-actions .btn-primary:hover {
+     background-color: #2563eb;
+     transform: translateY(-1px);
+   }
+
+   @media (max-width: 640px) {
+     .no-quiz-content {
+       padding: 1.5rem 1rem;
+     }
+   }
+
+.error-main {
+     padding: 4rem 0;
+     min-height: calc(100vh - 80px);
+     display: flex;
+     align-items: center;
+   }
+
+   .error-content {
+     text-align: center;
+     max-width: 500px;
+     margin: 0 auto;
+   }
+
+   .error-icon {
+     color: var(--destructive);
+     margin-bottom: 2rem;
+   }
+
+   .error-title {
+     font-size: 2rem;
+     margin-bottom: 1rem;
+     color: var(--foreground);
+   }
+
+   .error-message {
+     font-size: 1.1rem;
+     color: var(--muted-foreground);
+     margin-bottom: 2rem;
+     line-height: 1.6;
+   }
+
+   .error-actions {
+     display: flex;
+     gap: 1rem;
+     justify-content: center;
+     flex-wrap: wrap;
+   }
+
+   @media (max-width: 480px) {
+     .error-actions {
+       flex-direction: column;
+       align-items: center;
+     }
+
+     .error-actions .btn {
+       width: 100%;
+       max-width: 250px;
+     }
+   }
 
 
 
