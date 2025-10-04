@@ -4,7 +4,7 @@ const QuizController = require('../controllers/QuizController');
 const authenticateToken = require('../middlewares/auth');
 const authorizeRoles = require('../middlewares/authorize');
 
-router.get('/list', authenticateToken, QuizController.getQuizList);
+router.get('/list', authenticateToken, QuizController.getAllQuizzes);
 router.get('/start/:quizType', authenticateToken, QuizController.startQuiz);
 
 
