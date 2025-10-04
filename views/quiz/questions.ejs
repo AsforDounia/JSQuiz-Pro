@@ -181,6 +181,7 @@
 
       let selectedAnswer = null;
   let totalScore = 0;
+  let userSelectedAnswers = []; 
   const questions = <%- JSON.stringify(questions) %>;
   let currentQuestionIndex = <%= currentQuestion %>;
   const thematique_id = '<%= theme.id %>';
@@ -200,13 +201,17 @@
   // Submit answer
 async function handleSubmit() {
   console.log('currentQuestionIndex:', currentQuestionIndex);
-  if (selectedAnswer === null) return;
+  // if (selectedAnswer === null) return;
   const questionId = questions[currentQuestionIndex].id;
   const options = Array.isArray(questions[currentQuestionIndex].options)
     ? questions[currentQuestionIndex].options
     : JSON.parse(questions[currentQuestionIndex].options || "[]");
 
-  const selectedAnswerText = options[selectedAnswer];
+      
+  // const selectedAnswerText = options[selectedAnswer];
+  const selectedAnswerText = selectedAnswer !== null ? options[selectedAnswer] : "no answer";
+  userSelectedAnswers[currentQuestionIndex] = selectedAnswerText;
+
   isLastQuestion = currentQuestionIndex === questions.length - 1;
 
   const response = await fetch(`/users/submit-answer`, {
@@ -254,15 +259,16 @@ const isCorrect = data.correct;
         }
       }
     }
-    card.onclick = null; // Disable further clicks
+    if (selectedAnswer != null) {
+      card.onclick = null; // Disable further clicks
+
+    }
   });
 
-  // ✅ Fix variable name
   currentQuestionIndex += 1;
   document.getElementById('sbtBtn').disabled = true;
-  if (isLastQuestion) {
-    document.getElementById('nextBtn').textContent = 'View Report';
-  }
+
+
 }
 function displayNextQuestion() {
   document.getElementById('sbtBtn').disabled = false;
@@ -294,15 +300,33 @@ function displayNextQuestion() {
 
   selectedAnswer = null;
   document.getElementById('sbtBtn').disabled = true;
+
+  if (currentQuestionIndex === questions.length - 1) {
+    document.getElementById('nextBtn').textContent = 'View Report';
+  } else {
+    document.getElementById('nextBtn').textContent = 'Next Question';
+  }
 }
 
-function handleNext() {
+async function handleNext() {
+  if (currentQuestionIndex >= questions.length) {
+    showReport();
+    return;
+  }
+
+  // If no answer selected, submit as "no answer"
+  if (selectedAnswer === null) {
+    await handleSubmit();
+  }
+
+  // Only display next question if we haven't reached the end
   if (currentQuestionIndex < questions.length) {
     displayNextQuestion();
   } else {
     showReport();
   }
 }
+
 function showReport() {
   document.getElementById('reportModal').classList.remove('hidden');
 //  document.querySelector('.quiz-main-content').classList.add('hidden');
@@ -318,11 +342,12 @@ function showReport() {
   document.getElementById('reportTitle').textContent = '<%= theme.name %>';
   const questionReview = document.getElementById('questionReview');
   questionReview.innerHTML = '';
-  questions.forEach((q, idx) => {
+    questions.forEach((q, idx) => {
     const options = Array.isArray(q.options) ? q.options : JSON.parse(q.options || '[]');
-    const userAnswer = selectedAnswer !== null ? options[selectedAnswer] : 'No answer';
+    const userAnswer = userSelectedAnswers[idx] || "no answer"; // ✅ use array
     const correctAnswer = Array.isArray(q.correct_answers) ? q.correct_answers[0] : JSON.parse(q.correct_answers || '[]')[0];
     const isCorrect = userAnswer === correctAnswer;
+
     const questionDiv = document.createElement('div');
     questionDiv.className = 'report-question';
     questionDiv.innerHTML = `
