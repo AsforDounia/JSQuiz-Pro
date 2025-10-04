@@ -44,7 +44,7 @@ module.exports = {
       // Récupérer les questions pour ce thème
       const questions = await Question.findAll({
         where: { thematique_id: theme.id },
-        attributes: ["id", "question", "options"],
+        attributes: ["id", "question", "options" , "correct_answers"],
         order: [["id", "ASC"]],
       });
 
@@ -96,8 +96,8 @@ module.exports = {
                     attributes: ['id', 'question', 'options', 'correct_answers']
                 }]
             });
-
-            res.json({ quizzes: themes });
+            res.render("quiz/quiz-list", { themes: themes });
+            // res.json({ quizzes: themes });
         } catch (error) {
             console.error('Failed to get all quizzes:', error);
             res.status(500).json({ message: 'Internal server error' });

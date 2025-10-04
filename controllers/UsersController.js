@@ -1,5 +1,4 @@
-const { Score, Theme } = require('../models');
-const User = require('../models/User');
+const { Score, Theme, User, Question } = require('../models');
 
 module.exports = {
     // Render user dashboard
@@ -70,7 +69,57 @@ module.exports = {
             console.error(error);
             return res.status(500).json({ message: 'Server error' });
         }
-    }
+    },
+
+
+    // Handle question answer submission
+    async submitQuestionAnswer(req, res) {
+        try {
+            let { questionId : questionId, selectedAnswer, isLastQuestion, totalScore = 0, thematique_id } = req.body;
+
+            const userId = req.user.id;
+
+            // Get the question and correct answer
+            const question = await Question.findByPk(questionId);
+
+            if (!question) {
+                return res.status(404).json({ success: false, message: 'Question not found' });
+            }
+
+            // Compare answer as text 
+            const correctAnswers = question.correct_answers ? (Array.isArray(question.correct_answers) ? question.correct_answers : JSON.parse(question.correct_answers)) : [];
+            const userAnswer = [(selectedAnswer || '')];
+
+            const isCorrect = correctAnswers.some(
+                ans => (ans || '') === (userAnswer[0] || '')
+            );
+
+            // Increment totalScore by 10 if correct
+            if (isCorrect) {
+                totalScore += 10;
+            }
+
+            // If this is the last question, save the total score
+            if (isLastQuestion && typeof totalScore === 'number' && thematique_id) {
+                await Score.create({
+                    user_id: userId,
+                    thematique_id,
+                    score: totalScore,
+                    played_at: new Date(),
+                });
+            }
+
+            return res.json({
+                success: true,
+                correct: isCorrect,
+                correctAnswer: question.answer,
+                totalScore
+            });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ success: false, message: 'Server error' });
+        }
+    },
 
 }
 
