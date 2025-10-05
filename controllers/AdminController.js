@@ -13,9 +13,8 @@ module.exports = {
                 attributes: ['id', 'question', 'options', 'correct_answers']
                 }
             ],
-            order: [[{ model: Question, as: 'questions' }, 'id', 'ASC']]
+            // order: [[{ model: Question, as: 'questions' }, 'id', 'ASC']]
             });
-
             // score board users
 
 
