@@ -133,6 +133,7 @@ module.exports = {
     try {
       const { themeId } = req.params;
       await Question.destroy({ where: { thematique_id: themeId } });
+      await Theme.destroy({ where: { id: themeId } });
             res.json({ message: 'Questions deleted successfully' });
     } catch (error) {
             console.error('Failed to delete questions:', error);

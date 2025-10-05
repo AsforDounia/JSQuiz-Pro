@@ -564,7 +564,7 @@
       <div class="modal-header">
         <h2 class="modal-title" id="questionModalTitle">Nouvelle Question</h2>
       </div>
-      <form id="questionForm" action="/questions" method="POST">
+      <form id="questionForm">
         <div class="form-group">
           <label class="form-label">Quiz</label>
           <select class="form-select" name="thematique_id" required>
@@ -713,22 +713,36 @@
       openQuizModal(id);
     }
 
-    function deleteQuiz(id) {
+    async function deleteQuiz(id) {
       if (confirm('Êtes-vous sûr de vouloir supprimer ce quiz ?')) {
-        console.log('Deleting quiz:', id);
-        alert('Quiz supprimé avec succès !');
+        fetch(`/quiz/theme/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => {
+            if (response.ok) {
+              sessionStorage.setItem('activeTab', 'quizzes');
+              location.reload();
+            } else {
+              alert('Erreur lors de la suppression de la quiz.');
+            }
+          })
+          .catch(() => {
+            alert('Erreur réseau lors de la suppression.');
+          });
       }
     }
 
     // Question Modal Functions
-    function openQuestionModal(id = null) {
+    function openQuestionModal() {
       document.getElementById('questionModal').classList.remove('hidden');
       document.getElementById('questionModalTitle').textContent = 'Nouvelle Question';
       const form = document.getElementById('questionForm');
       form.reset();
       form.action = '/questions';
       form.dataset.method = 'POST';
-      updateCorrectOptions();
     }
 
     function closeQuestionModal() {
@@ -750,8 +764,7 @@
         document.getElementById('questionModal').classList.remove('hidden');
         document.getElementById('questionModalTitle').textContent = 'Modifier la Question';
         const form = document.getElementById('questionForm');
-        form.action = `/questions/${id}`;
-        form.dataset.method = 'PUT';
+
 
         document.querySelector('[name="thematique_id"]').value = question.thematique_id;
         document.querySelector('[name="question"]').value = question.question;
@@ -765,6 +778,10 @@
             document.getElementById('correctAnswer').value = correctAnswers[0];
           }
         }
+
+        
+        form.action = `/questions/${id}`;
+        form.dataset.method = 'PUT';
       } catch (error) {
         alert('Erreur lors du chargement de la question');
       }
@@ -775,6 +792,7 @@
       e.preventDefault();
       const form = e.target;
       const formData = new FormData(form);
+      console.log('Form data:', Object.fromEntries(formData));
       const data = {
         thematique_id: parseInt(formData.get('thematique_id')),
         question: formData.get('question'),
@@ -787,17 +805,12 @@
 
       try {
         const response = await fetch(url, {
-          method: method === 'PUT' ? 'PUT' : 'POST',
+          method: method,
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
         if (response.ok) {
-          // alert('Question enregistrée avec succès !');
           closeQuestionModal();
-          // location.reload();
-          // let questiontab = document.querySelector('[data-tab="questions"]');
-          // questiontab.click();
-
           sessionStorage.setItem('activeTab', 'questions');
           location.reload();
         }
@@ -807,33 +820,63 @@
         }
       } catch (error) {
         console.error('Error submitting form:', error);
-        // alert('Erreur lors de la soumission du formulaire');
       }
     });
 
     // Theme Modal Functions
-    function openThemeModal(id = null) {
+    async function openThemeModal() {
       document.getElementById('themeModal').classList.remove('hidden');
-      if (id) {
-        document.getElementById('themeModalTitle').textContent = 'Modifier le Thème';
-      } else {
-        document.getElementById('themeModalTitle').textContent = 'Nouveau Thème';
-        document.getElementById('themeForm').reset();
-      }
+      document.getElementById('themeModalTitle').textContent = 'Nouveau Thème';
+      const form = document.getElementById('themeForm');
+      form.reset();
+      form.action = '/themes';
+      form.dataset.method = 'POST';
     }
 
     function closeThemeModal() {
       document.getElementById('themeModal').classList.add('hidden');
     }
 
-    function editTheme(id) {
-      openThemeModal(id);
+    async function editTheme(id) {
+      document.getElementById('themeModal').classList.remove('hidden');
+
+      const form = document.getElementById('themeForm');
+        form.action = `/themes/${id}`;
+        form.dataset.method = 'PUT';
+        document.getElementById('themeModalTitle').textContent = 'Modifier le Thème';
+        const response = await fetch(`/themes/${id}`);
+        if (!response.ok) throw new Error('Failed to fetch theme');
+        const theme = await response.json();
+        document.querySelector('[name="name"]').value = theme.name;
+        try {
+          const response = await fetch(`/themes/${id}`);
+        if (!response.ok) throw new Error('Failed to fetch theme');
+
+      } catch (error) {
+        alert('Erreur lors du chargement de la question');
+      }
     }
 
     function deleteTheme(id) {
       if (confirm('Êtes-vous sûr de vouloir supprimer ce thème ?')) {
-        console.log('Deleting theme:', id);
-        alert('Thème supprimé avec succès !');
+        fetch(`/themes/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => {
+            if (response.ok) {
+              sessionStorage.setItem('activeTab', 'themes');
+              location.reload();
+            } else {
+              alert('Erreur lors de la suppression du thème.');
+            }
+          })
+          .catch(() => {
+            alert('Erreur réseau lors de la suppression.');
+          });
+
       }
     }
 
@@ -864,11 +907,37 @@
     }
 
 
-    document.getElementById('themeForm').addEventListener('submit', (e) => {
+    document.getElementById('themeForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+
       const formData = new FormData(e.target);
-      console.log('Theme data:', Object.fromEntries(formData));
-      alert('Thème enregistré avec succès !');
+      const data = {
+        name: formData.get('name')
+      };
+
+      const form = e.target;
+      const method = form.dataset.method || 'POST';
+      const url = form.action;
+
+      try {
+        const response = await fetch(url, {
+          method: method === 'PUT' ? 'PUT' : 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (response.ok) {
+          closeQuestionModal();
+          sessionStorage.setItem('activeTab', 'themes');
+          location.reload();
+        }
+        else {
+          const error = await response.json();
+          console.log('Erreur: ' + (error.message || 'Impossible d\'enregistrer le thème'));
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+
       closeThemeModal();
     });
 
@@ -923,43 +992,6 @@
     // Update dropdown when user types in any option field
     optionInputs.forEach(letter => {
       document.getElementById("option" + letter).addEventListener("input", updateCorrectOptions);
-    });
-
-    // Handle form submission
-    document.getElementById('questionForm').addEventListener('submit', async (e) => {
-      e.preventDefault(); // Prevent default form submission
-
-      const formData = new FormData(e.target);
-      const data = {
-        thematique_id: parseInt(formData.get('thematique_id')),
-        question: formData.get('question'),
-        options: formData.getAll('options[]'),
-        correct_answers: formData.getAll('correct_answers[]')
-      };
-
-      console.log('Form data being submitted:', JSON.stringify(data, null, 2));
-
-      try {
-        const response = await fetch('/questions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-          console.log('Question successfully saved');
-          closeQuestionModal();
-          sessionStorage.setItem('activeTab', 'questions');
-          location.reload(); // Refresh to show new question
-        } else {
-          const error = await response.json();
-          alert('Erreur: ' + (error.message || 'Impossible d\'enregistrer la question'));
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
     });
 
 
