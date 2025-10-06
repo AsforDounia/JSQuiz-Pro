@@ -24,12 +24,12 @@ module.exports = {
                 include: [
                     {
                         model: Score,
-                        as: 'scores', // Make sure this matches your association
+                        as: 'scores',
                         attributes: ['id', 'score', 'thematique_id', 'played_at'],
                         include: [
                             {
                                 model: Theme,
-                                as: 'theme', // Make sure this matches your association
+                                as: 'theme',
                                 attributes: ['name']
                             }
                         ]
@@ -37,8 +37,15 @@ module.exports = {
                 ]
             });
 
-            res.render('admin/dashboard', { 
-                quizzes: themes , 
+            // calcule moyenne score  for each user
+            users.forEach(user => {
+                const completed = user.scores ? user.scores.length : 0;
+                const avgScore = completed > 0 ? Math.round(user.scores.reduce((sum, s) => sum + s.score, 0) / completed) : 0;
+                user.completed = completed;
+                user.avgScore = avgScore;
+            });
+            res.render('admin/dashboard', {
+                quizzes: themes ,
                 users : users,
                 user: req.user,
                 layout: 'layouts/main',
