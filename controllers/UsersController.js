@@ -41,15 +41,11 @@ module.exports = {
         const userScores = userWithScores.scores || [];
         const userCompleted = userScores.length;
         const userAvgScore = userCompleted > 0 ? Math.round(userScores.reduce((sum, s) => sum + s.score, 0) / userCompleted) : 0;
-        // Example: total time = number of quizzes * 2 min (replace with your logic if you have time data)
-        const userTotalTime = userScores.reduce((sum, s) => sum + (s.duration || 2), 0); // duration in minutes, fallback 2
-        // Example: best streak (replace with the name of the quiz have better score)
-        
+
         const bestScore = userScores.length > 0 ? Math.max(...userScores.map(s => s.score)) : 0;
         const userStats = {
             completed: userCompleted,
             avgScore: userAvgScore,
-            totalTime: userTotalTime,
             bestScore
         };
 
