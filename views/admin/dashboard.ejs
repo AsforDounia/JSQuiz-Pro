@@ -325,6 +325,7 @@
                   <th>ID</th>
                   <th>Nom</th>
                   <th>Email</th>
+                  <th>Badge</th>
                   <th>Rôle</th>
                   <th>Inscrit le</th>
                   <th>Actions</th>
@@ -343,10 +344,22 @@
                       <%= u.email %>
                     </td>
                     <td>
+                      <% if(u.completed === 0) { %>
+                        <span class="badge badge-secondary">Aucun</span>
+                      <% } else if(u.avgScore < 33) { %>
+                        <span class="badge badge-info">Débutant</span>
+                      <% } else if(u.avgScore < 67) { %>
+                        <span class="badge badge-warning">Intermédiaire</span>
+                      <% } else { %>
+                        <span class="badge badge-success">Expert</span>
+                      <% } %>
+                    </td>
+                    <td>
                       <span class="badge <%= u.role === 'admin' ? 'badge-warning' : 'badge-info' %>">
                         <%= u.role %>
                       </span>
                     </td>
+
                     <td>
                       <%= new Date(u.created_at).toLocaleDateString() %>
                     </td>
