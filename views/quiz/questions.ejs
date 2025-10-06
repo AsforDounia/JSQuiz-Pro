@@ -1,8 +1,5 @@
 
-<pre>
-  <!-- theme -->
-   <%= theme ? JSON.stringify(currentQuestion, null, 2) : null %>
-</pre>
+
     <!-- Quiz Content -->
     <main class="quiz-main-content">
       <div class="container">
@@ -15,6 +12,9 @@
                 <span class="quiz-badge"
                   >Question <span id="questionNumber"><%= currentQuestion + 1 %></span></span
                 >
+                <div class="quiz-timer-container">
+                  <span id="timer" class="quiz-timer">10</span>
+                </div>
                 <h2 id="questionText" class="quiz-question-title">
                   <%= questions[currentQuestion].question %>
                 </h2>
@@ -181,13 +181,16 @@
 
       let selectedAnswer = null;
   let totalScore = 0;
-  let userSelectedAnswers = []; 
+  let userSelectedAnswers = [];
   const questions = <%- JSON.stringify(questions) %>;
   let currentQuestionIndex = <%= currentQuestion %>;
   const thematique_id = '<%= theme.id %>';
+  let timerInterval;
+  let timeLeft = 10;
 
   // Select answer
   function selectAnswer(index) {
+    if (timeLeft <= 0) return; // Prevent selection after time out
     selectedAnswer = index;
     document.getElementById('sbtBtn').disabled = false;
 
@@ -196,10 +199,25 @@
     document.querySelector(`.quiz-option-card[data-index="${index}"]`).classList.add('selected');
   };
 
+  // Start timer
+  function startTimer() {
+    timeLeft = 10;
+    document.getElementById('timer').textContent = timeLeft;
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      document.getElementById('timer').textContent = timeLeft;
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        handleNext();
+      }
+    }, 1000);
+  }
+
 
   let isLastQuestion = currentQuestionIndex === questions.length - 1;
   // Submit answer
 async function handleSubmit() {
+  clearInterval(timerInterval); // Clear the timer
   console.log('currentQuestionIndex:', currentQuestionIndex);
   // if (selectedAnswer === null) return;
   const questionId = questions[currentQuestionIndex].id;
@@ -306,9 +324,12 @@ function displayNextQuestion() {
   } else {
     document.getElementById('nextBtn').textContent = 'Next Question';
   }
+
+  startTimer(); // Start the timer for the new question
 }
 
 async function handleNext() {
+  clearInterval(timerInterval);
   if (currentQuestionIndex >= questions.length) {
     showReport();
     return;
@@ -368,5 +389,8 @@ function closeReport() {
   // document.querySelector('.quiz-main-content').classList.remove('hidden');
   // document.body.style.overflow = 'auto'; // Re-enable background scrolling
 }
+
+    // Start timer for the initial question
+    startTimer();
     </script>
 

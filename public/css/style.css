@@ -1397,6 +1397,7 @@ body {
 
 .quiz-question-content {
   text-align: left;
+  position: relative;
 }
 
 .quiz-question-number {
@@ -2953,3 +2954,17 @@ body {
 }
 
 
+
+.quiz-timer-container{
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: 2px solid var(--border);
+  padding: 0.5rem 1rem;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
