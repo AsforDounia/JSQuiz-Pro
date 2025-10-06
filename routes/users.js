@@ -9,6 +9,12 @@ router.get('/dashboard', authenticateToken, authorizeRoles('user') ,UsersControl
 // Submit answer
 router.post('/submit-answer', authenticateToken, authorizeRoles('user') , UsersController.submitQuestionAnswer);
 
+// getById
+router.get('/:id', authenticateToken, authorizeRoles('admin'), UsersController.getById);
+// update
+router.put('/:id', authenticateToken, authorizeRoles('admin'), UsersController.updateRole);
 
+// delete
+router.delete('/:id', authenticateToken, authorizeRoles('admin'), UsersController.deleteUser);
 
 module.exports = router;
