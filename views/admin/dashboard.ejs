@@ -107,8 +107,8 @@
           <button class="tab-button" data-tab="questions">Questions</button>
           <button class="tab-button" data-tab="themes">Thèmes</button>
           <button class="tab-button" data-tab="users">Utilisateurs</button>
-          <button class="tab-button" data-tab="history">Historique Utilisateurs</button> <!-- NEW TAB -->
-          <button class="tab-button" data-tab="export">Export</button>
+          <button class="tab-button" data-tab="history">Historique Utilisateurs</button>
+          <!-- <button class="tab-button" data-tab="export">Export</button> -->
         </div>
       </div>
 
@@ -298,13 +298,13 @@
         <div class="section">
           <div class="section-header">
             <h2 class="section-title">Gestion des Utilisateurs</h2>
-            <button class="btn btn-primary" onclick="openUserModal()">
+            <!-- <button class="btn btn-primary" onclick="openUserModal()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="12" y1="5" x2="12" y2="19" />
                 <line x1="5" y1="12" x2="19" y2="12" />
               </svg>
               Nouvel Utilisateur
-            </button>
+            </button> -->
           </div>
 
           <div class="toolbar">
@@ -331,31 +331,35 @@
                 </tr>
               </thead>
               <tbody>
-                <% users.forEach(user=> { %>
+                <% users.forEach(u => { %>
                   <tr>
                     <td>
-                      <%= user.id %>
+                      <%= u.id %>
                     </td>
                     <td>
-                      <%= user.username %>
+                      <%= u.username %>
                     </td>
                     <td>
-                      <%= user.email %>
+                      <%= u.email %>
                     </td>
                     <td>
-                      <span class="badge <%= user.role === 'admin' ? 'badge-warning' : 'badge-info' %>">
-                        <%= user.role %>
+                      <span class="badge <%= u.role === 'admin' ? 'badge-warning' : 'badge-info' %>">
+                        <%= u.role %>
                       </span>
                     </td>
                     <td>
-                      <%= new Date(user.created_at).toLocaleDateString() %>
+                      <%= new Date(u.created_at).toLocaleDateString() %>
                     </td>
                     <td>
+                      <% if(u.id === user.id) { %>
+                        <em>Vous</em>
+                      <% } else { %>
                       <div class="actions">
-                        <button class="btn btn-sm" onclick="editUser(<%= user.id %>)">Modifier</button>
+                        <button class="btn btn-sm" onclick="editUser(<%= u.id %>)">Modifier</button>
                         <button class="btn btn-sm btn-destructive"
-                          onclick="deleteUser(<%= user.id %>)">Supprimer</button>
+                          onclick="deleteUser(<%= u.id %>)">Supprimer</button>
                       </div>
+                      <% } %>
                     </td>
                   </tr>
                   <% }) %>
@@ -649,7 +653,7 @@
         <h2 class="modal-title" id="userModalTitle">Nouvel Utilisateur</h2>
       </div>
       <form id="userForm">
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label class="form-label">Nom Complet</label>
           <input type="text" class="form-input" name="name" required>
         </div>
@@ -660,7 +664,7 @@
         <div class="form-group">
           <label class="form-label">Mot de Passe</label>
           <input type="password" class="form-input" name="password" required>
-        </div>
+        </div> -->
         <div class="form-group">
           <label class="form-label">Rôle</label>
           <select class="form-select" name="role" required>
@@ -895,14 +899,41 @@
       document.getElementById('userModal').classList.add('hidden');
     }
 
-    function editUser(id) {
+    async function editUser(id) {
       openUserModal(id);
+      const response = await fetch(`/users/${id}`);
+      if (!response.ok) throw new Error('Failed to fetch user');
+      const user = await response.json();
+
+      console.log('Editing user:', user);
+      const form = document.getElementById('userForm');
+      form.action = `/users/${id}`;
+      form.dataset.method = 'PUT';
+      document.querySelector('[name="role"]').value = user.role;
+      document.getElementById('userModalTitle').textContent = 'Modifier l\'Utilisateur';
+
+
     }
 
     function deleteUser(id) {
       if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
-        console.log('Deleting user:', id);
-        alert('Utilisateur supprimé avec succès !');
+        fetch(`/users/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => {
+            if (response.ok) {
+              sessionStorage.setItem('activeTab', 'users');
+              location.reload();
+            } else {
+              alert('Erreur lors de la suppression du thème.');
+            }
+          })
+          .catch(() => {
+            alert('Erreur réseau lors de la suppression.');
+          });
       }
     }
 
@@ -941,11 +972,38 @@
       closeThemeModal();
     });
 
-    document.getElementById('userForm').addEventListener('submit', (e) => {
+    document.getElementById('userForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+
       const formData = new FormData(e.target);
-      console.log('User data:', Object.fromEntries(formData));
-      alert('Utilisateur enregistré avec succès !');
+
+      const data = {
+        role: formData.get('role')
+      };
+
+      const form = e.target;
+      const method = form.dataset.method || 'POST';
+      const url = form.action;
+
+      try {
+        const response = await fetch(url, {
+          method: method === 'PUT' ? 'PUT' : 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (response.ok) {
+          closeQuestionModal();
+          sessionStorage.setItem('activeTab', 'users');
+          location.reload();
+        }
+        else {
+          const error = await response.json();
+          console.log('Erreur: ' + (error.message || 'Impossible d\'enregistrer l\'utilisateur'));
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+
       closeUserModal();
     });
 

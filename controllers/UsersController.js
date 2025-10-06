@@ -121,6 +121,69 @@ module.exports = {
         }
     },
 
+
+
+
+    // Fetch a user by ID
+    async getById(req, res) {
+        try {
+            const { id } = req.params;
+            if (isNaN(id)) {
+                return res.status(400).json({ message: 'Invalid user ID' });
+            }
+            const user = await User.findByPk(id);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            return res.json(user);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Server error' });
+        }
+    },
+
+
+    // Update user role
+    async updateRole(req, res) {
+        try {
+            const { id } = req.params;
+            const { role } = req.body;
+            if (isNaN(id)) {
+                return res.status(400).json({ message: 'Invalid user ID' });
+            }
+            const user = await User.findByPk(id);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            if (role) user.role = role;
+            await user.save();
+            return res.json({ message: 'User role updated successfully', data: user });
+        }
+        catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Server error' });
+        }
+    },
+
+    // deleteUser
+    async deleteUser(req, res) {
+        try {
+            const { id } = req.params;
+            if (isNaN(id)) {
+                return res.status(400).json({ message: 'Invalid user ID' });
+            }
+            const user = await User.findByPk(id);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            await user.destroy();
+            return res.json({ message: 'User deleted successfully' });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Server error' });
+        }
+    }
+
 }
 
 

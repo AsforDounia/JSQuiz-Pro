@@ -37,7 +37,6 @@ module.exports = {
                 ]
             });
 
-            
             res.render('admin/dashboard', { 
                 quizzes: themes , 
                 users : users,
