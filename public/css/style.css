@@ -2931,3 +2931,25 @@ body {
 }
 
 
+
+.font-bold {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.color-secondary {
+  color: var(--muted-foreground);
+}
+
+.color-success {
+  color: var(--success);
+}
+
+.color-warning {
+  color: var(--orange);
+}
+.color-info {
+  color: var(--info);
+}
+
+

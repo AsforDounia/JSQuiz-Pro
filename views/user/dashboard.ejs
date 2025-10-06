@@ -51,7 +51,7 @@
 
           <div class="stat-card">
             <div class="stat-icon stat-icon-time">
-              <svg
+              <!-- <svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -61,11 +61,35 @@
               >
                 <circle cx="12" cy="12" r="10" />
                 <polyline points="12,6 12,12 16,14" />
+              </svg> -->
+
+              <!-- Crown svg -->
+              <svg
+                class="crown-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <!-- <path d="M4 22h16l-3-7l-5 4l-5-4l-3 7z" /> -->
+                <path d="M2 9l5 2l2-5l3 4l3-4l2 5l5-2l-2 7H4L2 9z" />
               </svg>
             </div>
             <div class="stat-content">
-              <div class="stat-value" id="totalTime"><%= userStats.totalTime %>min</div>
-              <div class="stat-label">Temps Total</div>
+                <% if(userStats.completed === 0) { %>
+                  <span class="font-bold color-secondary">Aucun</span>
+                <% } else if(userStats.avgScore < 33) { %>
+                  <span class="font-bold color-info">Débutant</span>
+                <% } else if(userStats.avgScore < 67) { %>
+                  <span class="font-bold color-warning">Intermédiaire</span>
+                <% } else { %>
+                  <span class="font-bold color-success">Expert</span>
+                <% } %>
+              <div class="stat-label">Your Badge</div>
             </div>
           </div>
 
